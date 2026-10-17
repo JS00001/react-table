@@ -41,15 +41,13 @@ type TableContentProps<DataType> = TableComponentProps<DataType> & {
   isCompactView: boolean;
 };
 
-function TableContent<DataType>(props: TableContentProps<DataType>) {
-  const { table, isCompactView, rowComponent: RowComponent, getRowKey } = props;
-
+function TableContent<DataType>({ table, isCompactView, rowComponent: RowComponent, getRowKey }: TableContentProps<DataType>) {
   return (
-    <TableProvider {...props}>
+    <TableProvider {...table} isCompactView={isCompactView}>
       <TableHeaderRow />
       <div id="table-body" className="contents">
         {table.data.map((row, index) => (
-          <RowComponent key={getRowKey(row, index)} row={row} isCompactView={isCompactView} />
+          <RowComponent key={getRowKey(row, index)} row={row} />
         ))}
       </div>
     </TableProvider>

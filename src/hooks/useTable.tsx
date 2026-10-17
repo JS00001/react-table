@@ -7,6 +7,7 @@ import { TableColumnWidth } from "@/lib/const";
 
 export default function useTable<DataType>({
   data,
+  title,
   columns,
   maxColumnWidth = 200,
   selectionEnabled = false,
@@ -46,6 +47,7 @@ export default function useTable<DataType>({
 
   return {
     data,
+    title,
     maxColumnWidth,
     selectionEnabled,
     columns: tableColumns,

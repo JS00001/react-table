@@ -25,6 +25,8 @@ export type TableColumn<DataType> = {
 export type UseTableProps<DataType> = {
   /** The rows visible in the table. */
   data: DataType[];
+  /** The title of the table. */
+  title: string;
   /** The columns visible in the table. */
   columns: TableColumn<DataType>[];
   /** Whether or not the table allows row selection. */
@@ -34,6 +36,8 @@ export type UseTableProps<DataType> = {
 };
 
 export type TableData<DataType> = {
+  /** The title of the table. */
+  title: string;
   /** The rows visible in the table. */
   data: DataType[];
   /** The columns visible in the table. */
@@ -55,8 +59,6 @@ export type TableData<DataType> = {
 export type TableComponentProps<DataType> = React.HTMLAttributes<HTMLDivElement> & {
   /** The data to be displayed in the table. */
   table: TableData<DataType>;
-  /** The title of the table. */
-  title: string;
   /** A function that returns a unique key for each row in the table. */
   getRowKey: (row: DataType, index: number) => string;
   /** The component to be used for rendering each row in the table. */
@@ -66,6 +68,4 @@ export type TableComponentProps<DataType> = React.HTMLAttributes<HTMLDivElement>
 export type TableRowComponentProps<DataType> = {
   /** The data for the row. */
   row: DataType;
-  /** Whether or not the table is on a smaller screen, and should display the compact row card view. */
-  isCompactView: boolean;
 };

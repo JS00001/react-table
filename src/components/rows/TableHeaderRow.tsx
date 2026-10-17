@@ -1,5 +1,7 @@
-type TableHeaderRowProps = {};
+import { useTableContext } from "../TableProvider";
 
-export default function TableHeaderRow({}: TableHeaderRowProps) {
+export default function TableHeaderRow() {
+  const {} = useTableContext();
+
   return <></>;
 }

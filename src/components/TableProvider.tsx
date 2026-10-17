@@ -1,23 +1,15 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
-import { TableComponentProps } from "@/types";
+import type { TableData } from "@/types";
 
-type TableProviderProps<DataType> = TableComponentProps<DataType> & {
+type TableProviderContext<DataType> = TableData<DataType> & {
   isCompactView: boolean;
 };
 
-type TableProviderContext = {
-  isCompactView: boolean;
-};
+const TableContext = createContext<TableProviderContext<any> | undefined>(undefined);
 
-const TableContext = createContext<TableProviderContext | undefined>(undefined);
-
-export default function TableProvider<DataType>({
-  children,
-  isCompactView,
-  ...props
-}: PropsWithChildren<TableProviderProps<DataType>>) {
-  return <TableContext.Provider value={{ isCompactView }}>{children}</TableContext.Provider>;
+export default function TableProvider<DataType>({ children, ...props }: PropsWithChildren<TableProviderContext<DataType>>) {
+  return <TableContext.Provider value={props}>{children}</TableContext.Provider>;
 }
 
 export function useTableContext() {
