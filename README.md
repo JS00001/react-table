@@ -21,6 +21,7 @@ Follow the setup guide for each component you want to use:
 | Table | `@sencorp/react-ui/table` | [Table](docs/table.md) |
 | Modal | `@sencorp/react-ui/modal` | [Modal](docs/modal.md) |
 | Sidebar | `@sencorp/react-ui/sidebar` | [Sidebar](docs/sidebar.md) |
+| Toast | `@sencorp/react-ui/toast` | [Toast](docs/toast.md) |
 
 For tables, import the stylesheet once and wrap your table in `TableThemeProvider`.
 
@@ -28,7 +29,7 @@ For modals, register your components with `ModalProvider` at the app root and cr
 
 For sidebars, register your components with `SidebarProvider` at the app root and create a typed `useSidebar` wrapper.
 
-Customize panels and rows with your own classes and styles. No stylesheet import is needed for modals or sidebars. Tailwind is optional.
+For toasts, wrap your app in `ToastProvider` and call `useToast().open()` with your content.
 
 ## Try the demo
 

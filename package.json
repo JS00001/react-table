@@ -38,6 +38,16 @@
         "types": "./dist/sidebar/index.d.cts",
         "default": "./dist/sidebar/index.cjs"
       }
+    },
+    "./toast": {
+      "import": {
+        "types": "./dist/toast/index.d.ts",
+        "default": "./dist/toast/index.js"
+      },
+      "require": {
+        "types": "./dist/toast/index.d.cts",
+        "default": "./dist/toast/index.cjs"
+      }
     }
   },
   "files": [
