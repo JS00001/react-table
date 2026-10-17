@@ -1,5 +1,17 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "semi": true
+  "tabWidth": 2,
+  "printWidth": 128,
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.js",
+        "*.test.ts",
+        "*.test.js"
+      ],
+      "options": {
+        "singleQuote": false
+      }
+    }
+  ]
 }
