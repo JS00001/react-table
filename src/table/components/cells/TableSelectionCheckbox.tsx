@@ -1,6 +1,6 @@
 import { MouseEvent } from "react";
 
-import { styles } from "@/table/lib/util";
+import { styles } from "@/util";
 import CheckIcon from "@/table/components/icons/CheckIcon";
 import MinusIcon from "@/table/components/icons/MinusIcon";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";

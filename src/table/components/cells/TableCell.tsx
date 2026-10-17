@@ -1,6 +1,6 @@
 import { HTMLAttributes } from "react";
 
-import { styles } from "@/table/lib/util";
+import { styles } from "@/util";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";
 
 export type TableCellProps = HTMLAttributes<HTMLDivElement>;

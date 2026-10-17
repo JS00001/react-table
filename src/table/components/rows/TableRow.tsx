@@ -1,7 +1,7 @@
 import type { TableRowData } from "@/table/types";
 import type { HTMLAttributes, AnchorHTMLAttributes, MouseEvent, MouseEventHandler } from "react";
 
-import { styles } from "@/table/lib/util";
+import { styles } from "@/util";
 import TableCell from "@/table/components/cells/TableCell";
 import { useTableContext } from "@/table/context/TableContext";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";
