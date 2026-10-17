@@ -1,5 +1,6 @@
 import type { TableComponentProps } from "@/types";
 
+import TableProvider from "./TableProvider";
 import TableHeaderRow from "./rows/TableHeaderRow";
 
 import { styles } from "@/lib/util";
@@ -40,15 +41,17 @@ type TableContentProps<DataType> = TableComponentProps<DataType> & {
   isCompactView: boolean;
 };
 
-function TableContent<DataType>({ table, isCompactView, rowComponent: RowComponent, getRowKey }: TableContentProps<DataType>) {
+function TableContent<DataType>(props: TableContentProps<DataType>) {
+  const { table, isCompactView, rowComponent: RowComponent, getRowKey } = props;
+
   return (
-    <>
+    <TableProvider {...props}>
       <TableHeaderRow />
       <div id="table-body" className="contents">
         {table.data.map((row, index) => (
           <RowComponent key={getRowKey(row, index)} row={row} isCompactView={isCompactView} />
         ))}
       </div>
-    </>
+    </TableProvider>
   );
 }
