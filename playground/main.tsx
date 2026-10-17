@@ -100,8 +100,8 @@ function Playground() {
 
   return (
     <TableThemeProvider
-      tableCellClassName="border-t border-gray-200 p-2 items-center flex"
-      tableHeaderCellClassName="px-2 py-1 bg-gray-100"
+      tableCellClassName="border-t border-gray-200 px-2 py-2.5 items-center flex text-sm text-gray-800"
+      tableHeaderCellClassName="p-2 bg-gray-100 text-xs font-medium text-gray-700"
       tableCellHoverBackgroundColor={colors.blue[50]}
       tableCellActiveBackgroundColor={colors.blue[100]}
     >
