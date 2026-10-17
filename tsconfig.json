@@ -5,7 +5,8 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@sencorp/react-ui/table": ["./src/table/index.ts"]
     },
     "jsx": "react-jsx",
     "strict": true,

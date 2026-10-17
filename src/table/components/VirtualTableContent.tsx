@@ -1,8 +1,8 @@
-import type { TableComponentProps, TableRowData } from "@/types";
+import type { TableComponentProps, TableRowData } from "@/table/types";
 
-import TableProvider from "@/context/TableContext";
-import TableHeaderRow from "@/components/rows/TableHeaderRow";
-import useTableVirtualization from "@/hooks/useTableVirtualization";
+import TableProvider from "@/table/context/TableContext";
+import TableHeaderRow from "@/table/components/rows/TableHeaderRow";
+import useTableVirtualization from "@/table/hooks/useTableVirtualization";
 
 type VirtualTableContentProps<DataType extends TableRowData> = TableComponentProps<DataType> & {
   isCompactView: boolean;

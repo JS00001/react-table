@@ -1,30 +1,28 @@
 {
-  "name": "@sencorp/react-table",
+  "name": "@sencorp/react-ui",
   "version": "0.1.4",
-  "description": "A React table component library.",
+  "description": "React UI components from Sencorp, organized by component family.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JS00001/react-table.git"
+    "url": "git+https://github.com/JS00001/react-ui.git"
   },
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
+    "./table": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/table/index.d.ts",
+        "default": "./dist/table/index.js"
       },
       "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
+        "types": "./dist/table/index.d.cts",
+        "default": "./dist/table/index.cjs"
       }
     },
-    "./styles.css": "./dist/index.css"
+    "./table/styles.css": "./dist/table/index.css"
   },
   "files": [
     "dist",
+    "docs",
     "README.md"
   ],
   "sideEffects": [

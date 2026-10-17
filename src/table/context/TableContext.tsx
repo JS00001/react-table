@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 
-import type { TableData, TableRowData } from "@/types";
+import type { TableData, TableRowData } from "@/table/types";
 
 export type TableProviderContext<DataType extends TableRowData> = TableData<DataType> & {
   isCompactView: boolean;
