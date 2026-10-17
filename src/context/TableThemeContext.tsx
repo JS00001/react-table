@@ -2,23 +2,43 @@ import { createContext, useContext } from "react";
 import type { PropsWithChildren } from "react";
 
 export type TableThemeContextType = {
+  /** CSS classes applied to the table container. */
   tableContainerClassName?: string;
+  /** Inline styles applied to the table container. */
   tableContainerStyles?: React.CSSProperties;
+  /** CSS classes applied to table header cells. */
   tableHeaderCellClassName?: string;
+  /** Inline styles applied to table header cells. */
   tableHeaderCellStyles?: React.CSSProperties;
+  /** CSS classes applied to table body cells. */
   tableCellClassName?: string;
+  /** Inline styles applied to table body cells. */
   tableCellStyles?: React.CSSProperties;
+  /** Background color used when a row is hovered. */
   tableCellHoverBackgroundColor?: string;
+  /** Background color used while a row is pressed. */
   tableCellActiveBackgroundColor?: string;
+  /** Background color used for cells in a selected row. */
   tableCellSelectedBackgroundColor?: string;
+  /** Color used for the table selection checkbox. */
+  tableCheckboxColor?: string;
+  /** Color used for the check and minus icons in table checkboxes. */
+  tableCheckboxIconColor?: string;
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
 
-export type TableThemeProviderProps = PropsWithChildren<TableThemeContextType>;
+export default function TableThemeProvider({ children, ...theme }: PropsWithChildren<TableThemeContextType>) {
+  const themeValues: TableThemeContextType = {
+    ...theme,
+    tableCheckboxIconColor: theme.tableCheckboxIconColor ?? "#ffffff",
+    tableCheckboxColor: theme.tableCheckboxColor ?? "oklch(54.6% 0.245 262.881)",
+    tableCellHoverBackgroundColor: theme.tableCellHoverBackgroundColor ?? "oklch(98.5% 0.002 247.839)",
+    tableCellActiveBackgroundColor: theme.tableCellActiveBackgroundColor ?? "oklch(96.7% 0.003 264.542)",
+    tableCellSelectedBackgroundColor: theme.tableCellSelectedBackgroundColor ?? "oklch(92.8% 0.006 264.531)",
+  };
 
-export default function TableThemeProvider({ children, ...theme }: TableThemeProviderProps) {
-  return <TableThemeContext.Provider value={theme}>{children}</TableThemeContext.Provider>;
+  return <TableThemeContext.Provider value={themeValues}>{children}</TableThemeContext.Provider>;
 }
 
 export function useTableThemeContext() {
