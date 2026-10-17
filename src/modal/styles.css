@@ -5,9 +5,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000000;
+  background-color: rgb(0 0 0 / 50%);
+  animation: sencorp-modal-backdrop-enter 100ms ease;
 }
 
 .sencorp-modal-content {
   background-color: #ffffff;
+  animation: sencorp-modal-enter 100ms ease-out;
+}
+
+@keyframes sencorp-modal-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sencorp-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

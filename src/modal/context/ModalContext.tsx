@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 import type {
   ModalComponents,
@@ -13,6 +13,8 @@ export const ModalContext = createContext<ModalContextType<ModalComponents> | un
 
 export default function ModalProvider<Modals extends ModalComponents>({ children, modals }: ModalProviderProps<Modals>) {
   const [openModals, setOpenModals] = useState<OpenModals<Modals>>([]);
+
+  const hasOpenModals = openModals.length > 0;
 
   const open = (...args: OpenModalArgs<Modals>) => {
     const [name, props] = args;
@@ -29,13 +31,26 @@ export default function ModalProvider<Modals extends ModalComponents>({ children
     setOpenModals((current) => current.filter((modal) => modal.name !== name));
   };
 
-  const pop = () => {
-    setOpenModals((current) => current.slice(0, -1));
-  };
-
   const closeAll = () => {
     setOpenModals([]);
   };
+
+  const pop = useCallback(() => {
+    setOpenModals((current) => current.slice(0, -1));
+  }, []);
+
+  useEffect(() => {
+    if (!hasOpenModals) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented || event.repeat) return;
+      event.preventDefault();
+      pop();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [hasOpenModals, pop]);
 
   const context: ModalContextType<Modals> = {
     open,
