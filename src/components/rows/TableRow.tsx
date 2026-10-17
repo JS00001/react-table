@@ -39,8 +39,6 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
     { display: "contents" },
     isSelected && "sencorp-table-row-selected",
     isClickable && { cursor: "pointer" },
-    theme.tableCellClassName,
-    theme.tableCellStyles,
     className,
     style,
   );
@@ -51,6 +49,8 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
     { "--table-cell-hover-background-color": theme.tableCellHoverBackgroundColor },
     { "--table-cell-active-background-color": theme.tableCellActiveBackgroundColor },
     isClickable && { cursor: "pointer" },
+    theme.tableCellClassName,
+    theme.tableCellStyles,
     className,
     style,
   );
