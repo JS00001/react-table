@@ -2,6 +2,10 @@
   "name": "@sencorp/react-table",
   "version": "0.1.2",
   "description": "A React table component library.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JS00001/react-table.git"
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
