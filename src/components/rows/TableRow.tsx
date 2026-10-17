@@ -2,7 +2,6 @@ import type { TableRowData } from "@/types";
 import type { HTMLAttributes, AnchorHTMLAttributes, MouseEventHandler } from "react";
 
 import { styles } from "@/lib/util";
-import { useTableContext } from "@/context/TableContext";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
 type BaseRowProps<DataType extends TableRowData> = {
@@ -25,17 +24,27 @@ type LinkRowProps<DataType extends TableRowData> = BaseRowProps<DataType> &
 type TableRowProps<DataType extends TableRowData> = DivRowProps<DataType> | LinkRowProps<DataType>;
 
 export default function TableRow<DataType extends TableRowData>(props: TableRowProps<DataType>) {
-  const table = useTableContext();
   const theme = useTableThemeContext();
-
-  const { row, href, compact, style, className, children, onClick } = props;
+  const { href, compact, style, className, children, onClick } = props;
 
   const isClickable = !!(href || onClick);
-  const isFirstRow = table.data[0]?.id === row.id;
-  const isSelected = table.selectedIds.includes(row.id);
 
-  const largeContainerStyles = styles({ display: "contents" }, className, style);
-  const compactContainerStyles = styles({ display: "flex", flexDirection: "column" }, className, style);
+  const largeContainerStyles = styles(
+    { display: "contents" },
+    isClickable && { cursor: "pointer" },
+    theme.tableCellClassName,
+    theme.tableCellStyles,
+    className,
+    style,
+  );
+
+  const compactContainerStyles = styles(
+    { display: "flex", flexDirection: "column" },
+    isClickable && { cursor: "pointer" },
+    className,
+    style,
+  );
+
   const containerStyles = compact ? compactContainerStyles : largeContainerStyles;
 
   if (props.href !== undefined) {

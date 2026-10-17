@@ -6,6 +6,8 @@ export type TableThemeContextType = {
   tableContainerStyles?: React.CSSProperties;
   tableHeaderCellClassName?: string;
   tableHeaderCellStyles?: React.CSSProperties;
+  tableCellClassName?: string;
+  tableCellStyles?: React.CSSProperties;
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
