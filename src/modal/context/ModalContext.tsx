@@ -42,7 +42,6 @@ export default function ModalProvider<Modals extends ModalComponents>({ children
     close,
     closeAll,
     pop,
-    openModals,
   };
 
   return (
