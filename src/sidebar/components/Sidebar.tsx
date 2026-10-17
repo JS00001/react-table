@@ -14,8 +14,8 @@ export default function Sidebar({ children, className, style, ...props }: Sideba
       role="dialog"
       initial={{ x: "100%" }}
       animate={{ x: 0 }}
-      exit={{ x: "100%", transition: { duration: 0.2, ease: "easeIn" } }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
+      exit={{ x: "100%", transition: { duration: 0.1, ease: "easeIn" } }}
+      transition={{ duration: 0.1, ease: "easeOut" }}
       {...props}
       className={styles("sencorp-sidebar-content", className).className}
       style={{
