@@ -1,5 +1,7 @@
-type TableProps = {};
+import type { TableComponentProps } from "@/types";
 
-export default function Table({}: TableProps) {
+export default function Table<DataType>({}: TableComponentProps<DataType>) {
+  const tableStyles = {};
+
   return <></>;
 }

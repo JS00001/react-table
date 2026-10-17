@@ -16,13 +16,16 @@
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
       }
-    }
+    },
+    "./styles.css": "./dist/index.css"
   },
   "files": [
     "dist",
     "README.md"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js playground --host 127.0.0.1",
     "release": "node ./node_modules/tsup/dist/cli-default.js && npm publish --access public"

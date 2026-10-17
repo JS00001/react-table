@@ -44,3 +44,23 @@ export type TableData<DataType> = {
   /** Toggle a row as selected or unselected */
   toggleRowSelection: (rowIndex: number) => void;
 };
+
+export type TableComponentProps<DataType> = {
+  /** The data to be displayed in the table. */
+  table: TableData<DataType>;
+  /** The title of the table. */
+  title?: string;
+  /** The class name to be applied to the table. */
+  className?: string;
+  /** A function that returns a unique key for each row in the table. */
+  getRowKey: (row: DataType, index: number) => string;
+  /** The component to be used for rendering each row in the table. */
+  rowComponent: React.ComponentType<TableRowComponentProps<DataType>>;
+};
+
+export type TableRowComponentProps<DataType> = {
+  /** The data for the row. */
+  row: DataType;
+  /** Whether or not the table is on a smaller screen, and should display the compact row card view. */
+  isCompactView: boolean;
+};

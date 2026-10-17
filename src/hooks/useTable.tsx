@@ -13,17 +13,6 @@ export default function useTable<DataType>({ columns, selectionEnabled, data }: 
     selectedRowIndexes: [] as number[],
   });
 
-  function toggleRowSelection(rowIndex: number) {
-    setTableState((prevState) => {
-      const isCurrentlySelected = prevState.selectedRowIndexes.includes(rowIndex);
-      const newSelectedRowIndexes = isCurrentlySelected
-        ? prevState.selectedRowIndexes.filter((index) => index !== rowIndex)
-        : [...prevState.selectedRowIndexes, rowIndex];
-
-      return { ...prevState, selectedRowIndexes: newSelectedRowIndexes, lastSelectedRowIndex: rowIndex };
-    });
-  }
-
   const tableColumns = compute(() => {
     const currentColumns = [...columns];
 
@@ -38,6 +27,17 @@ export default function useTable<DataType>({ columns, selectionEnabled, data }: 
 
     return currentColumns;
   });
+
+  function toggleRowSelection(rowIndex: number) {
+    setTableState((prevState) => {
+      const isCurrentlySelected = prevState.selectedRowIndexes.includes(rowIndex);
+      const newSelectedRowIndexes = isCurrentlySelected
+        ? prevState.selectedRowIndexes.filter((index) => index !== rowIndex)
+        : [...prevState.selectedRowIndexes, rowIndex];
+
+      return { ...prevState, selectedRowIndexes: newSelectedRowIndexes, lastSelectedRowIndex: rowIndex };
+    });
+  }
 
   return {
     data,
