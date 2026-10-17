@@ -11,7 +11,12 @@ import type {
 
 export const ModalContext = createContext<ModalContextType<ModalComponents> | undefined>(undefined);
 
-export default function ModalProvider<Modals extends ModalComponents>({ children, modals }: ModalProviderProps<Modals>) {
+export default function ModalProvider<Modals extends ModalComponents>({
+  children,
+  modals,
+  modalBackgroundColor = "#ffffff",
+  modalBackdropColor = "rgb(0 0 0 / 50%)",
+}: ModalProviderProps<Modals>) {
   const [openModals, setOpenModals] = useState<OpenModals<Modals>>([]);
 
   const hasOpenModals = openModals.length > 0;
@@ -53,6 +58,8 @@ export default function ModalProvider<Modals extends ModalComponents>({ children
   }, [hasOpenModals, pop]);
 
   const context: ModalContextType<Modals> = {
+    modalBackgroundColor,
+    modalBackdropColor,
     open,
     close,
     closeAll,

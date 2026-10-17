@@ -1,13 +1,13 @@
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
-
-import type { ModalProps } from "@/modal/types";
+import React, { useEffect, useState } from "react";
 
 import { styles } from "@/util";
 import useModal from "@/modal/hooks/useModal";
 
-export default function Modal({ children, className }: ModalProps) {
-  const { pop } = useModal();
+type ModalProps = React.HTMLAttributes<HTMLDivElement>;
+
+export default function Modal({ children, className, style, ...props }: ModalProps) {
+  const { pop, modalBackgroundColor, modalBackdropColor } = useModal();
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -15,6 +15,8 @@ export default function Modal({ children, className }: ModalProps) {
     event.stopPropagation();
     pop();
   };
+
+  const modalStyles = styles("sencorp-modal-content", { backgroundColor: modalBackgroundColor }, className, style);
 
   // Ensure that the modal is only rendered during client side rendering
   useEffect(() => {
@@ -24,8 +26,8 @@ export default function Modal({ children, className }: ModalProps) {
   if (!container) return null;
 
   return createPortal(
-    <div className="sencorp-modal-backdrop" onClick={handleBackdropClick}>
-      <div {...styles("sencorp-modal-content", className)} role="dialog" aria-modal="true">
+    <div className="sencorp-modal-backdrop" style={{ backgroundColor: modalBackdropColor }} onClick={handleBackdropClick}>
+      <div role="dialog" aria-modal="true" className={modalStyles.className} style={modalStyles.style} {...props}>
         {children}
       </div>
     </div>,
