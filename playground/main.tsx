@@ -3,10 +3,10 @@ import { useState } from "react";
 import { createRoot } from "react-dom/client";
 
 import "./styles.css";
-import "@/styles.css";
-import type { TableColumn, TableRowComponentProps } from "@/index";
+import "@sencorp/react-ui/table/styles.css";
+import type { TableColumn, TableRowComponentProps } from "@sencorp/react-ui/table";
 
-import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@/index";
+import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-ui/table";
 
 type Person = {
   id: string;

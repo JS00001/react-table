@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 
-import { compute } from "@/lib/util";
-import { InternalCheckboxColumnId } from "@/lib/const";
-import { useTableContext } from "@/context/TableContext";
-import TableHeaderCell from "@/components/cells/TableHeaderCell";
-import { useTableThemeContext } from "@/context/TableThemeContext";
-import TableSelectionCheckbox from "@/components/cells/TableSelectionCheckbox";
+import { compute } from "@/table/lib/util";
+import { InternalCheckboxColumnId } from "@/table/lib/const";
+import { useTableContext } from "@/table/context/TableContext";
+import TableHeaderCell from "@/table/components/cells/TableHeaderCell";
+import { useTableThemeContext } from "@/table/context/TableThemeContext";
+import TableSelectionCheckbox from "@/table/components/cells/TableSelectionCheckbox";
 
 export default function TableHeaderRow() {
   const table = useTableContext();

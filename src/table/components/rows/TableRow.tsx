@@ -1,11 +1,11 @@
-import type { TableRowData } from "@/types";
+import type { TableRowData } from "@/table/types";
 import type { HTMLAttributes, AnchorHTMLAttributes, MouseEvent, MouseEventHandler } from "react";
 
-import { styles } from "@/lib/util";
-import TableCell from "@/components/cells/TableCell";
-import { useTableContext } from "@/context/TableContext";
-import { useTableThemeContext } from "@/context/TableThemeContext";
-import TableSelectionCheckbox from "@/components/cells/TableSelectionCheckbox";
+import { styles } from "@/table/lib/util";
+import TableCell from "@/table/components/cells/TableCell";
+import { useTableContext } from "@/table/context/TableContext";
+import { useTableThemeContext } from "@/table/context/TableThemeContext";
+import TableSelectionCheckbox from "@/table/components/cells/TableSelectionCheckbox";
 
 type BaseRowProps<DataType extends TableRowData> = {
   row: DataType;

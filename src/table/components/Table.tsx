@@ -1,12 +1,12 @@
-import type { TableComponentProps, TableRowData } from "@/types";
+import type { TableComponentProps, TableRowData } from "@/table/types";
 
-import TableProvider from "@/context/TableContext";
-import TableHeaderRow from "@/components/rows/TableHeaderRow";
+import TableProvider from "@/table/context/TableContext";
+import TableHeaderRow from "@/table/components/rows/TableHeaderRow";
 
-import { styles } from "@/lib/util";
-import { TableColumnWidth } from "@/lib/const";
-import { useTableThemeContext } from "@/context/TableThemeContext";
-import VirtualTableContent from "@/components/VirtualTableContent";
+import { styles } from "@/table/lib/util";
+import { TableColumnWidth } from "@/table/lib/const";
+import { useTableThemeContext } from "@/table/context/TableThemeContext";
+import VirtualTableContent from "@/table/components/VirtualTableContent";
 
 export default function Table<DataType extends TableRowData>(props: TableComponentProps<DataType>) {
   const theme = useTableThemeContext();

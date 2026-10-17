@@ -1,4 +1,4 @@
-import { TableSortOrder, TableColumnWidth, TableColumnAlignment } from "@/lib/const";
+import { TableSortOrder, TableColumnWidth, TableColumnAlignment } from "@/table/lib/const";
 import React from "react";
 
 type ValueOf<T> = T[keyof T];

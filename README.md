@@ -1,20 +1,36 @@
 ![React Table](https://cdn.sencorpllc.com/sencorpllc-react-table-banner.png)
 
-# @sencorp/react-table
+# @sencorp/react-ui
 
-A React table that fits right in. Bring your data, build your rows, and make it your own with flexible themes and built-in selection.
+React UI components organized by component family. The table module includes flexible themes, selection, sorting controls, and virtualization.
 
 ## Install
 
 ```sh
-npm install @sencorp/react-table
+npm install @sencorp/react-ui
 ```
 
 Requires React 18 or 19. Import the stylesheet once in your app:
 
 ```tsx
-import "@sencorp/react-table/styles.css";
+import "@sencorp/react-ui/table/styles.css";
 ```
+
+## Component imports
+
+Import each component family from its own path:
+
+```tsx
+import { Table, useTable } from "@sencorp/react-ui/table";
+```
+
+The table module is available now. Future modal and sidebar components will use `@sencorp/react-ui/modal` and `@sencorp/react-ui/sidebar`; those modules are not implemented yet.
+
+Each family lives in `src/<family>/index.ts`. To add a family, add its entry to `tsup.config.ts` and its public import path to `package.json` exports. Give any stylesheet its own export, following `@sencorp/react-ui/table/styles.css`.
+
+### Migrating from @sencorp/react-table
+
+Replace `@sencorp/react-table` imports with `@sencorp/react-ui/table` and the stylesheet import with `@sencorp/react-ui/table/styles.css`. Component names and props stay the same.
 
 ## Create a table
 
@@ -28,8 +44,8 @@ To create a table:
 Here is a complete example:
 
 ```tsx
-import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-table";
-import type { TableColumn, TableRowComponentProps } from "@sencorp/react-table";
+import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-ui/table";
+import type { TableColumn, TableRowComponentProps } from "@sencorp/react-ui/table";
 
 type Person = {
   id: string;

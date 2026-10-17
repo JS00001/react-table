@@ -1,9 +1,9 @@
 import { MouseEvent } from "react";
 
-import { styles } from "@/lib/util";
-import CheckIcon from "@/components/icons/CheckIcon";
-import MinusIcon from "@/components/icons/MinusIcon";
-import { useTableThemeContext } from "@/context/TableThemeContext";
+import { styles } from "@/table/lib/util";
+import CheckIcon from "@/table/components/icons/CheckIcon";
+import MinusIcon from "@/table/components/icons/MinusIcon";
+import { useTableThemeContext } from "@/table/context/TableThemeContext";
 
 export type TableSelectionCheckboxProps = {
   value?: boolean;

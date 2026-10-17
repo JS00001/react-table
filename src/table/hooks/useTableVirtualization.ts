@@ -1,10 +1,10 @@
 import { useCallback, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { elementScroll, observeElementOffset, observeElementRect, useVirtualizer } from "@tanstack/react-virtual";
 
-import type { TableRowData } from "@/types";
+import type { TableRowData } from "@/table/types";
 import type { VirtualizerOptions } from "@tanstack/react-virtual";
 
-import { CompactTableViewSize } from "@/lib/const";
+import { CompactTableViewSize } from "@/table/lib/const";
 
 type TableVirtualizerOptions = VirtualizerOptions<HTMLElement, HTMLDivElement>;
 
