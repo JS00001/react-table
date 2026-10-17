@@ -9,7 +9,7 @@ export type ColumnWidth = ValueOf<typeof TableColumnWidth>;
 
 export type ColumnAlignment = ValueOf<typeof TableColumnAlignment>;
 
-export type TableColumn<DataType> = {
+export type TableColumn = {
   /** The unique identifier for the column. */
   id: string;
   /** The display name of the column in the tables header. */
@@ -28,7 +28,7 @@ export type UseTableProps<DataType> = {
   /** The title of the table. */
   title: string;
   /** The columns visible in the table. */
-  columns: TableColumn<DataType>[];
+  columns: TableColumn[];
   /** Whether or not the table allows row selection. */
   selectionEnabled?: boolean;
   /** The maximum width of columns that do not have the 'fill' size */
@@ -41,7 +41,7 @@ export type TableData<DataType> = {
   /** The rows visible in the table. */
   data: DataType[];
   /** The columns visible in the table. */
-  columns: TableColumn<DataType>[];
+  columns: TableColumn[];
   /** The maximum column width for columns that do not have the 'fill' size. */
   maxColumnWidth: number;
   /** Whether or not the table allows row selection. */

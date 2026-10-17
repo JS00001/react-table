@@ -1,6 +1,6 @@
 import type { TableComponentProps } from "@/types";
 
-import TableProvider from "./TableProvider";
+import TableProvider from "../context/TableContext";
 import TableHeaderRow from "./rows/TableHeaderRow";
 
 import { styles } from "@/lib/util";
@@ -17,20 +17,20 @@ export default function Table<DataType>(props: TableComponentProps<DataType>) {
   };
 
   const largeTableStyles = styles(
-    "sencorp-table-container sencorp-table-container-large-view",
+    "sencorp-table-container-large-view",
     { gridTemplateColumns: columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
     className,
     style,
   );
 
-  const compactTableStyles = styles("sencorp-table-container sencorp-table-container-compact-view", className, style);
+  const compactTableStyles = styles("sencorp-table-container-compact-view", className, style);
 
   return (
     <>
-      <div className={largeTableStyles.className} style={largeTableStyles.style}>
+      <div id="table-container" className={largeTableStyles.className} style={largeTableStyles.style}>
         <TableContent {...props} isCompactView={false} />
       </div>
-      <div className={compactTableStyles.className} style={compactTableStyles.style}>
+      <div id="table-container" className={compactTableStyles.className} style={compactTableStyles.style}>
         <TableContent {...props} isCompactView={true} />
       </div>
     </>

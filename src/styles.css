@@ -1,7 +1,11 @@
-.sencorp-table-container {
+#table-container {
   width: 100%;
   overflow-x: auto;
   overflow-y: visible;
+}
+
+#table-header {
+  display: contents;
 }
 
 /* The table view when the view is larger than 1024px */
