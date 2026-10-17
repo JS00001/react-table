@@ -5,7 +5,7 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import MinusIcon from "@/components/icons/MinusIcon";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
-type TableSelectionCheckboxProps = {
+export type TableSelectionCheckboxProps = {
   value?: boolean;
   indeterminate?: boolean;
   onClick?: (event: MouseEvent) => void;

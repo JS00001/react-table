@@ -3,7 +3,7 @@ import { HTMLAttributes } from "react";
 import { styles } from "@/lib/util";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
-type TableCellProps = HTMLAttributes<HTMLDivElement>;
+export type TableCellProps = HTMLAttributes<HTMLDivElement>;
 
 export default function TableCell({ style, className, children, ...props }: TableCellProps) {
   const theme = useTableThemeContext();

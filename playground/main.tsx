@@ -3,12 +3,9 @@ import { createRoot } from "react-dom/client";
 
 import "./styles.css";
 import "@/styles.css";
+import type { TableColumn, TableRowComponentProps } from "@/index";
 
-import TableRow from "@/components/rows/TableRow";
-import TableCell from "@/components/cells/TableCell";
-import { useTableContext } from "@/context/TableContext";
-import { Table, TableThemeProvider, useTable } from "@/index";
-import type { TableColumn, TableRowComponentProps } from "@/types";
+import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@/index";
 
 type Person = {
   id: string;

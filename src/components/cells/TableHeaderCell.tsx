@@ -8,7 +8,7 @@ import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import { TableColumnAlignment, TableSortOrder } from "@/lib/const";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
-type TableHeaderCellProps = {
+export type TableHeaderCellProps = {
   column: TableColumn;
 };
 

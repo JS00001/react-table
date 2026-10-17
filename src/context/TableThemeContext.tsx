@@ -30,7 +30,9 @@ export type TableThemeContextType = {
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
 
-export default function TableThemeProvider({ children, ...theme }: PropsWithChildren<TableThemeContextType>) {
+export type TableThemeProviderProps = PropsWithChildren<TableThemeContextType>;
+
+export default function TableThemeProvider({ children, ...theme }: TableThemeProviderProps) {
   const themeValues: TableThemeContextType = {
     ...theme,
     tableActiveCheckboxIconColor: theme.tableActiveCheckboxIconColor ?? "#ffffff",

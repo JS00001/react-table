@@ -24,7 +24,7 @@ type LinkRowProps<DataType extends TableRowData> = BaseRowProps<DataType> &
     onClick?: never;
   };
 
-type TableRowProps<DataType extends TableRowData> = DivRowProps<DataType> | LinkRowProps<DataType>;
+export type TableRowProps<DataType extends TableRowData> = DivRowProps<DataType> | LinkRowProps<DataType>;
 
 export default function TableRow<DataType extends TableRowData>(props: TableRowProps<DataType>) {
   const table = useTableContext();
