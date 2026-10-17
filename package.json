@@ -4,7 +4,7 @@
   "description": "React UI components from Sencorp, organized by component family.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JS00001/react-table.git"
+    "url": "git+https://github.com/JS00001/react-ui.git"
   },
   "type": "module",
   "exports": {
@@ -22,6 +22,7 @@
   },
   "files": [
     "dist",
+    "docs",
     "README.md"
   ],
   "sideEffects": [
