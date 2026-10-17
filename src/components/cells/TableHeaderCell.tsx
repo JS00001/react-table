@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import type { TableColumn } from "@/types";
 
 import { styles } from "@/lib/util";
@@ -11,7 +12,7 @@ type TableHeaderCellProps = {
   column: TableColumn;
 };
 
-export default function TableHeaderCell({ column }: TableHeaderCellProps) {
+export default function TableHeaderCell({ column, children }: PropsWithChildren<TableHeaderCellProps>) {
   const table = useTableContext();
   const theme = useTableThemeContext();
 
@@ -36,7 +37,7 @@ export default function TableHeaderCell({ column }: TableHeaderCellProps) {
 
   return (
     <div className={headerStyles.className} style={headerStyles.style} onClick={handleHeaderClick}>
-      <p>{column.name}</p>
+      {children}
       {isSortingAscending && <ArrowDownIcon size={14} />}
       {isSortingDescending && <ArrowUpIcon size={14} />}
     </div>

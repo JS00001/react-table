@@ -1,5 +1,8 @@
 import { Fragment } from "react";
+
+import { InternalCheckboxColumnId } from "@/lib/const";
 import { useTableContext } from "@/context/TableContext";
+import TableHeaderCell from "@/components/cells/TableHeaderCell";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
 export default function TableHeaderRow() {
@@ -22,7 +25,11 @@ export default function TableHeaderRow() {
   return (
     <div id="table-header" className="sencorp-table-header-row">
       {table.columns.map((column, index) => (
-        <Fragment key={index}></Fragment>
+        <Fragment key={index}>
+          <TableHeaderCell column={column}>
+            {column.id === InternalCheckboxColumnId ? <></> : <p>{column.name}</p>}
+          </TableHeaderCell>
+        </Fragment>
       ))}
     </div>
   );

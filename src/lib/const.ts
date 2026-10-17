@@ -14,3 +14,5 @@ export const TableColumnAlignment = {
   CENTER: "center",
   RIGHT: "right",
 } as const;
+
+export const InternalCheckboxColumnId = "__internal_checkbox_column__";

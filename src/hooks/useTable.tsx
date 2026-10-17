@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { SortOrder, TableData, TableRowData, UseTableProps } from "@/types";
 
 import { compute } from "@/lib/util";
-import { TableColumnWidth, TableSortOrder } from "@/lib/const";
+import { InternalCheckboxColumnId, TableColumnWidth, TableSortOrder } from "@/lib/const";
 
 export default function useTable<DataType extends TableRowData>({
   data,
@@ -26,7 +26,7 @@ export default function useTable<DataType extends TableRowData>({
       currentColumns.unshift({
         name: "",
         alignment: "center",
-        id: "internal-checkbox-column",
+        id: InternalCheckboxColumnId,
         width: TableColumnWidth.CONTENT,
       });
     }
