@@ -18,7 +18,18 @@
         "default": "./dist/table/index.cjs"
       }
     },
-    "./table/styles.css": "./dist/table/index.css"
+    "./table/styles.css": "./dist/table/index.css",
+    "./modal/styles.css": "./dist/modal/index.css",
+    "./modal": {
+      "import": {
+        "types": "./dist/modal/index.d.ts",
+        "default": "./dist/modal/index.js"
+      },
+      "require": {
+        "types": "./dist/modal/index.d.cts",
+        "default": "./dist/modal/index.cjs"
+      }
+    }
   },
   "files": [
     "dist",

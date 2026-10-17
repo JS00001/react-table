@@ -22,6 +22,7 @@ import "@sencorp/react-ui/table/styles.css";
 | Component | Import path | Documentation | Status |
 | --- | --- | --- | --- |
 | Table | `@sencorp/react-ui/table` | [Usage, props, and examples](docs/table.md) | Available |
+| Modal | `@sencorp/react-ui/modal` | [Usage, props, and examples](docs/modal.md) | Available |
 
 ## Add a component family
 

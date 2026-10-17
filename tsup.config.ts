@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: { 'table/index': 'src/table/index.ts' },
+  entry: { 'table/index': 'src/table/index.ts', 'modal/index': 'src/modal/index.ts' },
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
