@@ -1,4 +1,4 @@
-![React Table](https://cdn.sencorpllc.com/sencorp-react-table-banner.png)
+![React Table](https://cdn.sencorpllc.com/sencorpllc-react-table-banner.png)
 
 # @sencorp/react-table
 
