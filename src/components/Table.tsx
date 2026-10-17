@@ -1,4 +1,4 @@
-import type { TableComponentProps } from "@/types";
+import type { TableComponentProps, TableRowData } from "@/types";
 
 import TableProvider from "../context/TableContext";
 import TableHeaderRow from "./rows/TableHeaderRow";
@@ -7,7 +7,7 @@ import { styles } from "@/lib/util";
 import { TableColumnWidth } from "@/lib/const";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
-export default function Table<DataType>(props: TableComponentProps<DataType>) {
+export default function Table<DataType extends TableRowData>(props: TableComponentProps<DataType>) {
   const theme = useTableThemeContext();
   const { table, className, style } = props;
   const { columns, maxColumnWidth } = table;
@@ -47,18 +47,22 @@ export default function Table<DataType>(props: TableComponentProps<DataType>) {
   );
 }
 
-type TableContentProps<DataType> = TableComponentProps<DataType> & {
+type TableContentProps<DataType extends TableRowData> = TableComponentProps<DataType> & {
   isCompactView: boolean;
 };
 
-function TableContent<DataType>({ table, isCompactView, rowComponent: RowComponent, getRowKey }: TableContentProps<DataType>) {
+function TableContent<DataType extends TableRowData>({
+  table,
+  isCompactView,
+  rowComponent: RowComponent,
+}: TableContentProps<DataType>) {
   return (
     <TableProvider {...table} isCompactView={isCompactView}>
       <TableHeaderRow />
 
       <div id="table-body" className="contents">
-        {table.data.map((row, index) => (
-          <RowComponent key={getRowKey(row, index)} row={row} />
+        {table.data.map((row) => (
+          <RowComponent key={row.id} row={row} />
         ))}
       </div>
     </TableProvider>

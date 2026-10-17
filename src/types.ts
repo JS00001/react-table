@@ -9,6 +9,11 @@ export type ColumnWidth = ValueOf<typeof TableColumnWidth>;
 
 export type ColumnAlignment = ValueOf<typeof TableColumnAlignment>;
 
+export type TableRowData = {
+  /** A unique identifier for the row. */
+  id: string | number;
+};
+
 export type TableColumn = {
   /** The unique identifier for the column. */
   id: string;
@@ -22,7 +27,7 @@ export type TableColumn = {
   alignment?: ColumnAlignment;
 };
 
-export type UseTableProps<DataType> = {
+export type UseTableProps<DataType extends TableRowData> = {
   /** The rows visible in the table. */
   data: DataType[];
   /** The title of the table. */
@@ -35,7 +40,7 @@ export type UseTableProps<DataType> = {
   maxColumnWidth?: number;
 };
 
-export type TableData<DataType> = {
+export type TableData<DataType extends TableRowData> = {
   /** The title of the table. */
   title: string;
   /** The rows visible in the table. */
@@ -50,24 +55,22 @@ export type TableData<DataType> = {
   sortOrder: SortOrder | null;
   /** The column that the table is currently sorted by. */
   sortBy: string | null;
-  /** The indexes of the currently selected rows. */
-  selectedRowIndexes: number[];
+  /** The IDs of the currently selected rows. */
+  selectedIds: DataType["id"][];
   /** Toggle a row as selected or unselected */
-  toggleRowSelection: (rowIndex: number) => void;
+  toggleRowSelection: (rowId: DataType["id"]) => void;
   /** Set the sort by value to a new column */
   setSortBy: (columnId: string) => void;
 };
 
-export type TableComponentProps<DataType> = React.HTMLAttributes<HTMLDivElement> & {
+export type TableComponentProps<DataType extends TableRowData> = React.HTMLAttributes<HTMLDivElement> & {
   /** The data to be displayed in the table. */
   table: TableData<DataType>;
-  /** A function that returns a unique key for each row in the table. */
-  getRowKey: (row: DataType, index: number) => string;
   /** The component to be used for rendering each row in the table. */
   rowComponent: React.ComponentType<TableRowComponentProps<DataType>>;
 };
 
-export type TableRowComponentProps<DataType> = {
+export type TableRowComponentProps<DataType extends TableRowData> = {
   /** The data for the row. */
   row: DataType;
 };

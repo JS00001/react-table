@@ -1,3 +1,5 @@
+import TableThemeProvider from "@/context/TableThemeContext";
+import { useTableContext } from "@/context/TableContext";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -7,26 +9,28 @@ import useTable from "@/hooks/useTable";
 import type { TableColumn, TableRowComponentProps } from "@/types";
 
 type Person = {
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
 };
 
-const columns: TableColumn<Person>[] = [
+const columns: TableColumn[] = [
   { id: "email", name: "Email", width: "fill" },
   { id: "firstName", name: "First name", width: "fill" },
   { id: "lastName", name: "Last name", width: "fill" },
 ];
 
 const people: Person[] = [
-  { email: "alex.morgan@example.com", firstName: "Alex", lastName: "Morgan" },
-  { email: "jamie.chen@example.com", firstName: "Jamie", lastName: "Chen" },
-  { email: "taylor.patel@example.com", firstName: "Taylor", lastName: "Patel" },
-  { email: "jordan.brooks@example.com", firstName: "Jordan", lastName: "Brooks" },
-  { email: "casey.rivera@example.com", firstName: "Casey", lastName: "Rivera" },
+  { id: "person-1", email: "alex.morgan@example.com", firstName: "Alex", lastName: "Morgan" },
+  { id: "person-2", email: "jamie.chen@example.com", firstName: "Jamie", lastName: "Chen" },
+  { id: "person-3", email: "taylor.patel@example.com", firstName: "Taylor", lastName: "Patel" },
+  { id: "person-4", email: "jordan.brooks@example.com", firstName: "Jordan", lastName: "Brooks" },
+  { id: "person-5", email: "casey.rivera@example.com", firstName: "Casey", lastName: "Rivera" },
 ];
 
-function PersonRow({ row, isCompactView }: TableRowComponentProps<Person>) {
+function PersonRow({ row }: TableRowComponentProps<Person>) {
+  const { isCompactView } = useTableContext();
   if (isCompactView) {
     return (
       <dl>
@@ -50,7 +54,7 @@ function PersonRow({ row, isCompactView }: TableRowComponentProps<Person>) {
 }
 
 function Playground() {
-  const table = useTable({ data: people, columns });
+  const table = useTable({ data: people, columns, title: "People" });
 
   return (
     <main>
@@ -64,7 +68,7 @@ function Playground() {
             </div>
           ))}
         </div>
-        <Table table={table} title="People" getRowKey={(person) => person.email} rowComponent={PersonRow} />
+        <Table table={table} rowComponent={PersonRow} />
       </section>
     </main>
   );
@@ -72,6 +76,8 @@ function Playground() {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Playground />
+    <TableThemeProvider>
+      <Playground />
+    </TableThemeProvider>
   </StrictMode>,
 );

@@ -7,8 +7,9 @@ export default function TableHeaderRow() {
   const theme = useTableThemeContext();
 
   const hasRows = table.data.length > 0;
-  const isEveryRowSelected = hasRows && table.data.length === table.selectedRowIndexes.length;
-  const isSomeRowsSelected = hasRows && table.selectedRowIndexes.length > 0 && !isEveryRowSelected;
+  const selectedRowCount = table.data.filter((row) => table.selectedIds.includes(row.id)).length;
+  const isEveryRowSelected = hasRows && table.data.length === selectedRowCount;
+  const isSomeRowsSelected = selectedRowCount > 0 && !isEveryRowSelected;
 
   if (table.isCompactView) {
     return (

@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import type { SortOrder, TableData, UseTableProps } from "@/types";
+import type { SortOrder, TableData, TableRowData, UseTableProps } from "@/types";
 
 import { compute } from "@/lib/util";
 import { TableColumnWidth, TableSortOrder } from "@/lib/const";
 
-export default function useTable<DataType>({
+export default function useTable<DataType extends TableRowData>({
   data,
   title,
   columns,
@@ -15,8 +15,8 @@ export default function useTable<DataType>({
   const [tableState, setTableState] = useState({
     sortBy: null as string | null,
     sortOrder: null as SortOrder | null,
-    lastSelectedRowIndex: null as number | null,
-    selectedRowIndexes: [] as number[],
+    selectedIds: [] as DataType["id"][],
+    lastSelectedId: null as DataType["id"] | null,
   });
 
   const tableColumns = compute(() => {
@@ -34,14 +34,14 @@ export default function useTable<DataType>({
     return currentColumns;
   });
 
-  const toggleRowSelection = (rowIndex: number) => {
+  const toggleRowSelection = (rowId: DataType["id"]) => {
     setTableState((prevState) => {
-      const isCurrentlySelected = prevState.selectedRowIndexes.includes(rowIndex);
-      const newSelectedRowIndexes = isCurrentlySelected
-        ? prevState.selectedRowIndexes.filter((index) => index !== rowIndex)
-        : [...prevState.selectedRowIndexes, rowIndex];
+      const isCurrentlySelected = prevState.selectedIds.includes(rowId);
+      const newSelectedIds = isCurrentlySelected
+        ? prevState.selectedIds.filter((id) => id !== rowId)
+        : [...prevState.selectedIds, rowId];
 
-      return { ...prevState, selectedRowIndexes: newSelectedRowIndexes, lastSelectedRowIndex: rowIndex };
+      return { ...prevState, selectedIds: newSelectedIds, lastSelectedId: rowId };
     });
   };
 
@@ -71,7 +71,7 @@ export default function useTable<DataType>({
     columns: tableColumns,
     sortBy: tableState.sortBy,
     sortOrder: tableState.sortOrder,
-    selectedRowIndexes: tableState.selectedRowIndexes,
+    selectedIds: tableState.selectedIds,
     toggleRowSelection,
     setSortBy,
   };
