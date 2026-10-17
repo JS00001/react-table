@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import type { SortOrder, TableData, TableRowData, UseTableProps } from "@/table/types";
 
-import { compute } from "@/table/lib/util";
-import { InternalCheckboxColumnId, TableColumnWidth, TableSortOrder } from "@/table/lib/const";
+import { compute } from "@/util";
+import { InternalCheckboxColumnId, TableColumnWidth, TableSortOrder } from "@/table/const";
 
 export default function useTable<DataType extends TableRowData>({
   data,

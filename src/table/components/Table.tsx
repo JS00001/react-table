@@ -3,8 +3,8 @@ import type { TableComponentProps, TableRowData } from "@/table/types";
 import TableProvider from "@/table/context/TableContext";
 import TableHeaderRow from "@/table/components/rows/TableHeaderRow";
 
-import { styles } from "@/table/lib/util";
-import { TableColumnWidth } from "@/table/lib/const";
+import { styles } from "@/util";
+import { TableColumnWidth } from "@/table/const";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";
 import VirtualTableContent from "@/table/components/VirtualTableContent";
 

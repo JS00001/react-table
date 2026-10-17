@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
 import type { TableColumn } from "@/table/types";
 
-import { styles } from "@/table/lib/util";
+import { styles } from "@/util";
 import ArrowUpIcon from "@/table/components/icons/ArrowUpIcon";
 import { useTableContext } from "@/table/context/TableContext";
 import ArrowDownIcon from "@/table/components/icons/ArrowDownIcon";
-import { TableColumnAlignment, TableSortOrder } from "@/table/lib/const";
+import { TableColumnAlignment, TableSortOrder } from "@/table/const";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";
 
 export type TableHeaderCellProps = {

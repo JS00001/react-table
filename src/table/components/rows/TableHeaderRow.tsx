@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
-import { compute } from "@/table/lib/util";
-import { InternalCheckboxColumnId } from "@/table/lib/const";
+import { compute } from "@/util";
+import { InternalCheckboxColumnId } from "@/table/const";
 import { useTableContext } from "@/table/context/TableContext";
 import TableHeaderCell from "@/table/components/cells/TableHeaderCell";
 import { useTableThemeContext } from "@/table/context/TableThemeContext";

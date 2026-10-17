@@ -6,7 +6,9 @@
     "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./src/*"],
-      "@sencorp/react-ui/table": ["./src/table/index.ts"]
+      "@sencorp/react-ui/table": ["./src/table/index.ts"],
+      "@sencorp/react-ui/modal": ["./src/modal/index.ts"],
+      "@sencorp/react-ui/sidebar": ["./src/sidebar/index.ts"]
     },
     "jsx": "react-jsx",
     "strict": true,

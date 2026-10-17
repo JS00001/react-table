@@ -4,7 +4,7 @@ import { elementScroll, observeElementOffset, observeElementRect, useVirtualizer
 import type { TableRowData } from "@/table/types";
 import type { VirtualizerOptions } from "@tanstack/react-virtual";
 
-import { CompactTableViewSize } from "@/table/lib/const";
+import { CompactTableViewSize } from "@/table/const";
 
 type TableVirtualizerOptions = VirtualizerOptions<HTMLElement, HTMLDivElement>;
 

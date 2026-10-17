@@ -18,7 +18,27 @@
         "default": "./dist/table/index.cjs"
       }
     },
-    "./table/styles.css": "./dist/table/index.css"
+    "./table/styles.css": "./dist/table/index.css",
+    "./modal": {
+      "import": {
+        "types": "./dist/modal/index.d.ts",
+        "default": "./dist/modal/index.js"
+      },
+      "require": {
+        "types": "./dist/modal/index.d.cts",
+        "default": "./dist/modal/index.cjs"
+      }
+    },
+    "./sidebar": {
+      "import": {
+        "types": "./dist/sidebar/index.d.ts",
+        "default": "./dist/sidebar/index.js"
+      },
+      "require": {
+        "types": "./dist/sidebar/index.d.cts",
+        "default": "./dist/sidebar/index.cjs"
+      }
+    }
   },
   "files": [
     "dist",
@@ -34,7 +54,8 @@
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "motion": "^12.23.0"
   },
   "publishConfig": {
     "access": "public"
@@ -43,6 +64,7 @@
     "@tailwindcss/vite": "4.3.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
+    "motion": "12.23.0",
     "prettier": "3.9.10",
     "react": "19.3.0",
     "react-dom": "19.3.0",

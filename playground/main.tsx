@@ -6,7 +6,143 @@ import "./styles.css";
 import "@sencorp/react-ui/table/styles.css";
 import type { TableColumn, TableRowComponentProps } from "@sencorp/react-ui/table";
 
+import { Sidebar, SidebarProvider, useSidebar as useLibrarySidebar } from "@sencorp/react-ui/sidebar";
+
+import { Modal, ModalProvider, useModal as useLibraryModal } from "@sencorp/react-ui/modal";
 import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-ui/table";
+
+function InfoModal() {
+  const { open, close } = useModal();
+
+  return (
+    <Modal className="w-full max-w-xl rounded-lg p-6">
+      <h2 className="mb-2 text-lg font-semibold">Info</h2>
+      <p className="mb-4 text-gray-600">This is info</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-red-600 px-3 py-2 text-white"
+          onClick={() => open("DANGER", { message: "This danger modal is above Info. Close it to return to Info." })}
+        >
+          Open danger on top
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={() => close("INFO")}>
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+function DangerModal({ message }: { message: string }) {
+  const { open, close } = useModal();
+
+  return (
+    <Modal className="w-full max-w-md rounded-lg p-6">
+      <h2 className="mb-2 text-lg font-semibold text-red-600">Danger</h2>
+      <p className="mb-4 text-gray-600">{message}</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white"
+          onClick={() =>
+            open("CONFIRMATION", { message: "This confirmation is above Danger. Close it to return to the previous modal." })
+          }
+        >
+          Open confirmation on top
+        </button>
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-red-600 px-3 py-2 text-white"
+          onClick={() => close("DANGER")}
+        >
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+function ConfirmationModal({ message }: { message: string }) {
+  const { pop, closeAll } = useModal();
+
+  return (
+    <Modal className="w-full max-w-sm rounded-lg p-6">
+      <h2 className="mb-2 text-lg font-semibold">Confirmation</h2>
+      <p className="mb-4 text-gray-600">{message}</p>
+      <p className="mb-4 text-sm text-gray-500">Escape or a backdrop click also closes just the top modal.</p>
+      <div className="flex gap-2">
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>
+          Back to previous modal
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white" onClick={closeAll}>
+          Close all modals
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+const modals = {
+  INFO: InfoModal,
+  DANGER: DangerModal,
+  CONFIRMATION: ConfirmationModal,
+};
+
+const useModal = () => useLibraryModal<typeof modals>();
+
+function MemberSidebar({ name }: { name: string }) {
+  const { open, pop } = useSidebar();
+
+  return (
+    <Sidebar aria-labelledby="member-sidebar-title" className="p-6" style={{ width: "32rem" }}>
+      <h2 id="member-sidebar-title" className="mb-2 text-lg font-semibold">
+        {name}
+      </h2>
+      <p className="mb-4 text-gray-600">Open another sidebar on top. The backdrop stays the same.</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white"
+          onClick={() => open("DETAILS", { name })}
+        >
+          Open details on top
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>
+          Close
+        </button>
+      </div>
+    </Sidebar>
+  );
+}
+
+function DetailsSidebar({ name }: { name: string }) {
+  const { pop, closeAll } = useSidebar();
+
+  return (
+    <Sidebar aria-labelledby="details-sidebar-title" className="p-6" style={{ width: "32rem" }}>
+      <h2 id="details-sidebar-title" className="mb-2 text-lg font-semibold">
+        Details for {name}
+      </h2>
+      <p className="mb-4 text-gray-600">Close this panel to reveal the member sidebar underneath.</p>
+      <div className="flex gap-2">
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>
+          Back
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white" onClick={closeAll}>
+          Close all sidebars
+        </button>
+      </div>
+    </Sidebar>
+  );
+}
+
+const sidebars = {
+  MEMBER: MemberSidebar,
+  DETAILS: DetailsSidebar,
+};
+
+const useSidebar = () => useLibrarySidebar<typeof sidebars>();
 
 type Person = {
   id: string;
@@ -95,17 +231,37 @@ function DemoTable({ demo }: { demo: (typeof demos)[number] }) {
 }
 
 function Playground() {
+  const { open: openSidebar } = useSidebar();
+  const { open } = useModal();
   const [activeTab, setActiveTab] = useState(0);
   const demo = demos[activeTab];
 
   return (
-    <TableThemeProvider
-      tableCellClassName="border-t border-gray-200 px-2 py-2.5 items-center flex text-sm text-gray-800"
-      tableHeaderCellClassName="p-2 bg-gray-100 text-xs font-medium text-gray-700"
-      tableCellHoverBackgroundColor={colors.blue[50]}
-      tableCellActiveBackgroundColor={colors.blue[100]}
-    >
+    <>
       <main className="mx-auto max-w-6xl p-4 sm:p-8">
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
+            onClick={() => open("INFO")}
+          >
+            Open info modal
+          </button>
+          <button
+            type="button"
+            className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
+            onClick={() => open("DANGER", { message: "This is the danger modal." })}
+          >
+            Open danger modal
+          </button>
+          <button
+            type="button"
+            className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
+            onClick={() => openSidebar("MEMBER", { name: "Alex Morgan" })}
+          >
+            Open sidebar
+          </button>
+        </div>
         <div className="my-4 flex gap-2">
           {demos.map((item, index) => (
             <button
@@ -124,8 +280,21 @@ function Playground() {
           <DemoTable demo={demo} />
         </section>
       </main>
-    </TableThemeProvider>
+    </>
   );
 }
 
-createRoot(document.getElementById("root")!).render(<Playground />);
+createRoot(document.getElementById("root")!).render(
+  <ModalProvider modals={modals}>
+    <SidebarProvider sidebars={sidebars}>
+      <TableThemeProvider
+        tableCellClassName="border-t border-gray-200 px-2 py-2.5 items-center flex text-sm text-gray-800"
+        tableHeaderCellClassName="p-2 bg-gray-100 text-xs font-medium text-gray-700"
+        tableCellHoverBackgroundColor={colors.blue[50]}
+        tableCellActiveBackgroundColor={colors.blue[100]}
+      >
+        <Playground />
+      </TableThemeProvider>
+    </SidebarProvider>
+  </ModalProvider>,
+);
