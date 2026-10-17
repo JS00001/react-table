@@ -17,7 +17,7 @@ export default function Table<DataType>(props: TableComponentProps<DataType>) {
 
   const largeTableStyles = styles(
     "sencorp-table-container sencorp-table-container-large-view",
-    { gridTemplateColumns: table.columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
+    { gridTemplateColumns: columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
     className,
     style,
   );
@@ -40,6 +40,15 @@ type TableContentProps<DataType> = TableComponentProps<DataType> & {
   isCompactView: boolean;
 };
 
-function TableContent<DataType>({}: TableContentProps<DataType>) {
-  return <></>;
+function TableContent<DataType>({ table, isCompactView, rowComponent: RowComponent, getRowKey }: TableContentProps<DataType>) {
+  return (
+    <>
+      <TableHeaderRow />
+      <div id="table-body" className="contents">
+        {table.data.map((row, index) => (
+          <RowComponent key={getRowKey(row, index)} row={row} isCompactView={isCompactView} />
+        ))}
+      </div>
+    </>
+  );
 }
