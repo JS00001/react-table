@@ -1,10 +1,11 @@
-import { useTableThemeContext } from "@/context/TableThemeContext";
-import { styles } from "@/lib/util";
 import { HTMLAttributes } from "react";
+
+import { styles } from "@/lib/util";
+import { useTableThemeContext } from "@/context/TableThemeContext";
 
 type TableCellProps = HTMLAttributes<HTMLDivElement>;
 
-export default function TableCell({ style, className, ...props }: TableCellProps) {
+export default function TableCell({ style, className, children, ...props }: TableCellProps) {
   const theme = useTableThemeContext();
 
   const cellStyles = styles(
@@ -17,5 +18,13 @@ export default function TableCell({ style, className, ...props }: TableCellProps
     style,
   );
 
-  return <div></div>;
+  return (
+    <div {...props} id="table-cell" className={cellStyles.className} style={cellStyles.style}>
+      {typeof children === "string" ? (
+        <p style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{children}</p>
+      ) : (
+        children
+      )}
+    </div>
+  );
 }

@@ -1,11 +1,9 @@
-import TableThemeProvider from "@/context/TableThemeContext";
-import { useTableContext } from "@/context/TableContext";
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
 import "@/styles.css";
-import Table from "@/components/Table";
-import useTable from "@/hooks/useTable";
+
+import TableRow from "@/components/rows/TableRow";
+import TableCell from "@/components/cells/TableCell";
+import { Table, TableThemeProvider, useTable } from "@/index";
 import type { TableColumn, TableRowComponentProps } from "@/types";
 
 type Person = {
@@ -30,26 +28,12 @@ const people: Person[] = [
 ];
 
 function PersonRow({ row }: TableRowComponentProps<Person>) {
-  const { isCompactView } = useTableContext();
-  if (isCompactView) {
-    return (
-      <dl>
-        {columns.map((column) => (
-          <div key={column.id}>
-            <dt>{column.name}</dt>
-            <dd>{row[column.id as keyof Person]}</dd>
-          </div>
-        ))}
-      </dl>
-    );
-  }
-
   return (
-    <div role="row">
-      <div role="cell">{row.email}</div>
-      <div role="cell">{row.firstName}</div>
-      <div role="cell">{row.lastName}</div>
-    </div>
+    <TableRow row={row}>
+      <TableCell>{row.email}</TableCell>
+      <TableCell>{row.firstName}</TableCell>
+      <TableCell>{row.lastName}</TableCell>
+    </TableRow>
   );
 }
 
@@ -57,27 +41,10 @@ function Playground() {
   const table = useTable({ data: people, columns, title: "People" });
 
   return (
-    <main>
-      <h1>People</h1>
-      <p>Five sample rows for the table playground.</p>
-      <section role="table" aria-label="People">
-        <div role="row">
-          {columns.map((column) => (
-            <div key={column.id} role="columnheader">
-              {column.name}
-            </div>
-          ))}
-        </div>
-        <Table table={table} rowComponent={PersonRow} />
-      </section>
-    </main>
+    <TableThemeProvider>
+      <Table table={table} rowComponent={PersonRow} />
+    </TableThemeProvider>
   );
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <TableThemeProvider>
-      <Playground />
-    </TableThemeProvider>
-  </StrictMode>,
-);
+createRoot(document.getElementById("root")!).render(<Playground />);
