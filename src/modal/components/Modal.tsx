@@ -1,24 +1,35 @@
 import { createPortal } from "react-dom";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { motion, useIsPresent } from "motion/react";
+
+import type { MouseEvent } from "react";
+import type { ModalProps } from "@/modal/types";
 
 import { styles } from "@/util";
 import useModal from "@/modal/hooks/useModal";
 
-type ModalProps = React.HTMLAttributes<HTMLDivElement>;
-
 export default function Modal({ children, className, style, ...props }: ModalProps) {
+  const isPresent = useIsPresent();
   const { pop, modalBackgroundColor, modalBackdropColor } = useModal();
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
-  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target !== event.currentTarget) return;
+  const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget || !isPresent) return;
     event.stopPropagation();
     pop();
   };
 
-  const modalStyles = styles("sencorp-modal-content", { backgroundColor: modalBackgroundColor }, className, style);
+  const backdropStyles = styles({
+    position: "fixed",
+    inset: 0,
+    zIndex: 1000,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: modalBackdropColor,
+    pointerEvents: isPresent ? "auto" : "none",
+  });
 
-  // Ensure that the modal is only rendered during client side rendering
   useEffect(() => {
     setContainer(document.body);
   }, []);
@@ -26,11 +37,29 @@ export default function Modal({ children, className, style, ...props }: ModalPro
   if (!container) return null;
 
   return createPortal(
-    <div className="sencorp-modal-backdrop" style={{ backgroundColor: modalBackdropColor }} onClick={handleBackdropClick}>
-      <div role="dialog" aria-modal="true" className={modalStyles.className} style={modalStyles.style} {...props}>
+    <motion.div
+      className="sencorp-modal-backdrop"
+      style={backdropStyles.style}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.1 }}
+      onClick={handleBackdropClick}
+    >
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 12 }}
+        transition={{ duration: 0.1, ease: "easeOut" }}
+        {...props}
+        className={styles("sencorp-modal-content", className).className}
+        style={{ backgroundColor: modalBackgroundColor, ...style }}
+      >
         {children}
-      </div>
-    </div>,
+      </motion.div>
+    </motion.div>,
     container,
   );
 }

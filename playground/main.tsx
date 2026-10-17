@@ -3,9 +3,10 @@ import { useState } from "react";
 import { createRoot } from "react-dom/client";
 
 import "./styles.css";
-import "@sencorp/react-ui/modal/styles.css";
 import "@sencorp/react-ui/table/styles.css";
 import type { TableColumn, TableRowComponentProps } from "@sencorp/react-ui/table";
+
+import { Sidebar, SidebarProvider, useSidebar as useLibrarySidebar } from "@sencorp/react-ui/sidebar";
 
 import { Modal, ModalProvider, useModal as useLibraryModal } from "@sencorp/react-ui/modal";
 import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-ui/table";
@@ -89,6 +90,45 @@ const modals = {
 };
 
 const useModal = () => useLibraryModal<typeof modals>();
+
+function MemberSidebar({ name }: { name: string }) {
+  const { open, pop } = useSidebar();
+
+  return (
+    <Sidebar aria-labelledby="member-sidebar-title" className="p-6" style={{ width: "32rem" }}>
+      <h2 id="member-sidebar-title" className="mb-2 text-lg font-semibold">{name}</h2>
+      <p className="mb-4 text-gray-600">Open another sidebar on top. The backdrop stays the same.</p>
+      <div className="flex gap-2">
+        <button type="button" className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white" onClick={() => open("DETAILS", { name })}>
+          Open details on top
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>Close</button>
+      </div>
+    </Sidebar>
+  );
+}
+
+function DetailsSidebar({ name }: { name: string }) {
+  const { pop, closeAll } = useSidebar();
+
+  return (
+    <Sidebar aria-labelledby="details-sidebar-title" className="p-6">
+      <h2 id="details-sidebar-title" className="mb-2 text-lg font-semibold">Details for {name}</h2>
+      <p className="mb-4 text-gray-600">Close this panel to reveal the member sidebar underneath.</p>
+      <div className="flex gap-2">
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>Back</button>
+        <button type="button" className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white" onClick={closeAll}>Close all sidebars</button>
+      </div>
+    </Sidebar>
+  );
+}
+
+const sidebars = {
+  MEMBER: MemberSidebar,
+  DETAILS: DetailsSidebar,
+};
+
+const useSidebar = () => useLibrarySidebar<typeof sidebars>();
 
 type Person = {
   id: string;
@@ -177,6 +217,7 @@ function DemoTable({ demo }: { demo: (typeof demos)[number] }) {
 }
 
 function Playground() {
+  const { open: openSidebar } = useSidebar();
   const { open } = useModal();
   const [activeTab, setActiveTab] = useState(0);
   const demo = demos[activeTab];
@@ -198,6 +239,13 @@ function Playground() {
             onClick={() => open("DANGER", { message: "This is the danger modal." })}
           >
             Open danger modal
+          </button>
+          <button
+            type="button"
+            className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
+            onClick={() => openSidebar("MEMBER", { name: "Alex Morgan" })}
+          >
+            Open sidebar
           </button>
         </div>
         <div className="my-4 flex gap-2">
@@ -224,6 +272,7 @@ function Playground() {
 
 createRoot(document.getElementById("root")!).render(
   <ModalProvider modals={modals}>
+    <SidebarProvider sidebars={sidebars}>
     <TableThemeProvider
       tableCellClassName="border-t border-gray-200 px-2 py-2.5 items-center flex text-sm text-gray-800"
       tableHeaderCellClassName="p-2 bg-gray-100 text-xs font-medium text-gray-700"
@@ -232,5 +281,6 @@ createRoot(document.getElementById("root")!).render(
     >
       <Playground />
     </TableThemeProvider>
+    </SidebarProvider>
   </ModalProvider>,
 );

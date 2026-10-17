@@ -1,3 +1,4 @@
+import { AnimatePresence } from "motion/react";
 import { createContext, useCallback, useEffect, useState } from "react";
 
 import type {
@@ -53,8 +54,8 @@ export default function ModalProvider<Modals extends ModalComponents>({
       pop();
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [hasOpenModals, pop]);
 
   const context: ModalContextType<Modals> = {
@@ -70,11 +71,13 @@ export default function ModalProvider<Modals extends ModalComponents>({
     <ModalContext.Provider value={context as unknown as ModalContextType<ModalComponents>}>
       {children}
 
+      <AnimatePresence>
       {openModals.map(({ name, props }) => {
         const Component: ModalComponents[string] = modals[name];
         if (!Component) return null;
         return <Component key={String(name)} {...props} />;
       })}
+      </AnimatePresence>
     </ModalContext.Provider>
   );
 }

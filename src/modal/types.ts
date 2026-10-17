@@ -1,3 +1,4 @@
+import type { HTMLMotionProps } from "motion/react";
 import type { ComponentProps, ComponentType, CSSProperties, PropsWithChildren } from "react";
 
 export type ModalComponents = Record<string, ComponentType<any>>;
@@ -26,9 +27,7 @@ export type ModalProviderProps<Modals extends ModalComponents> = PropsWithChildr
   modalBackdropColor?: CSSProperties["backgroundColor"];
 }>;
 
-export type ModalProps = PropsWithChildren<{
-  className?: string;
-}>;
+export type ModalProps = HTMLMotionProps<"div">;
 
 export type ModalContextType<Modals extends ModalComponents> = {
   /** The background color of the modal content. */
