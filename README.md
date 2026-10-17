@@ -1,4 +1,4 @@
-![Sencorp React UI](https://cdn.sencorpllc.com/sencorp-react-ui.png)
+![Sencorp React UI](https://cdn.sencorpllc.com/sencorp-react-ui-documentation.png)
 
 # @sencorp/react-ui
 

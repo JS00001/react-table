@@ -1,4 +1,4 @@
-![Sencorp React UI Sidebar](https://cdn.sencorpllc.com/sencorp-react-ui-sidebar.png)
+![Sencorp React UI Sidebar](https://cdn.sencorpllc.com/sencorp-react-ui-documentation-sidebar.png)
 
 # Sidebar
 

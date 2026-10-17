@@ -1,4 +1,4 @@
-![Sencorp React UI Modal](https://cdn.sencorpllc.com/sencorp-react-ui-modal.png)
+![Sencorp React UI Modal](https://cdn.sencorpllc.com/sencorp-react-ui-documentation-modal.png)
 
 # Modal
 
