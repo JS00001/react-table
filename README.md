@@ -6,52 +6,37 @@ Commonly used React UI components, ready to customize with your own design syste
 
 ## Install
 
+Use React 18 or 19. Install the package and Motion 12:
+
 ```sh
-npm install @sencorp/react-ui motion
+npm install @sencorp/react-ui "motion@^12.23.0"
 ```
 
-Requires React 18 or 19. Modals and sidebars use Motion 12.23 or newer within version 12, supplied by your app as a peer dependency. Import each component family from its own path:
+## Choose a component
 
-```tsx
-import { Table, useTable } from "@sencorp/react-ui/table";
-import "@sencorp/react-ui/table/styles.css";
-```
+Follow the setup guide for each component you want to use:
 
-## Components
+| Component | Import path | Setup guide |
+| --- | --- | --- |
+| Table | `@sencorp/react-ui/table` | [Table](docs/table.md) |
+| Modal | `@sencorp/react-ui/modal` | [Modal](docs/modal.md) |
+| Sidebar | `@sencorp/react-ui/sidebar` | [Sidebar](docs/sidebar.md) |
 
-| Component | Import path | Documentation | Status |
-| --- | --- | --- | --- |
-| Table | `@sencorp/react-ui/table` | [Usage, props, and examples](docs/table.md) | Available |
-| Modal | `@sencorp/react-ui/modal` | [Usage, props, and examples](docs/modal.md) | Available |
-| Sidebar | `@sencorp/react-ui/sidebar` | [Usage, props, and examples](docs/sidebar.md) | Available |
+For tables, import the stylesheet once and wrap your table in `TableThemeProvider`.
 
-## Modals
+For modals, register your components with `ModalProvider` at the app root and create a typed `useModal` wrapper.
 
-Register your modal components with `ModalProvider` at the root of your app, then create a typed wrapper around `useModal<typeof modals>()`. Open components with their own props, stack them, and close them with `close`, `pop`, or `closeAll`.
+For sidebars, register your components with `SidebarProvider` at the app root and create a typed `useSidebar` wrapper.
 
-See the [modal API and complete setup example](docs/modal.md) for the provider, hook, component styling, and backdrop behavior.
+Customize panels and rows with your own classes and styles. No stylesheet import is needed for modals or sidebars. Tailwind is optional.
 
-## Add a component family
+## Try the demo
 
-Each family lives in `src/<family>/index.ts`, with documentation in `docs/<family>.md`. Add its entry to `tsup.config.ts`, its public import path to `package.json` exports, and a link above. Give any stylesheet its own export, following `@sencorp/react-ui/table/styles.css`.
-
-## Run the demo
-
-Use Node.js 22.12 or newer.
+Use Node.js 22.12 or newer. In this repository, run:
 
 ```sh
 npm install
 npm run dev
 ```
 
-Open the local URL printed in your terminal. Edit `playground/main.tsx` to try changes.
-
-## Publish
-
-Sign in with `npm login`, update the version in `package.json`, then run:
-
-```sh
-npm run release
-```
-
-This builds the library and publishes it publicly to npm. The playground and Tailwind are excluded from the package build.
+Open the local URL printed in your terminal.

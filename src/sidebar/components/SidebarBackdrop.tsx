@@ -1,10 +1,11 @@
 import { motion, useIsPresent } from "motion/react";
 
+import { styles } from "@/util";
 import useSidebar from "@/sidebar/hooks/useSidebar";
 
 export default function SidebarBackdrop() {
   const isPresent = useIsPresent();
-  const { sidebarBackdropColor, pop } = useSidebar();
+  const { sidebarBackdropColor, sidebarBackdropClassName, pop } = useSidebar();
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target !== event.currentTarget || !isPresent) return;
@@ -14,7 +15,6 @@ export default function SidebarBackdrop() {
 
   return (
     <motion.div
-      className="sencorp-sidebar-backdrop"
       style={{
         position: "absolute",
         inset: 0,
@@ -26,6 +26,7 @@ export default function SidebarBackdrop() {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
       onClick={handleBackdropClick}
+      className={styles("sencorp-sidebar-backdrop", sidebarBackdropClassName).className}
     />
   );
 }

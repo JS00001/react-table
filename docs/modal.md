@@ -2,17 +2,21 @@
 
 [All components](../README.md#components)
 
-`ModalProvider` owns the open modal stack and renders the components registered with it. `useModal` reads that shared state through a typed app wrapper. `Modal` provides the backdrop and centered content panel.
-
 ## Setup
 
-Install `motion@^12.23.0` in your app if it is not already present. Motion is a peer dependency and is excluded from this library’s build.
+1. Install the package and Motion 12:
 
-No stylesheet import is required. Modal layout styles are inline, and Motion handles the animations.
+   ```sh
+   npm install @sencorp/react-ui "motion@^12.23.0"
+   ```
 
-Register component functions, with each key becoming a modal name. Props are inferred directly from each component; no separate props map or refs are needed.
+2. Create each modal component using `Modal`. Declare the props you want to pass when opening it.
+3. Add the components to a `modals` object, using a name for each key.
+4. Create an app hook with `useLibraryModal<typeof modals>()`.
+5. Wrap your app in `<ModalProvider modals={modals}>`.
+6. Call your hook's `open` method with a modal name and its props.
 
-Here is a complete example:
+## Complete example
 
 ```tsx
 import { Modal, ModalProvider, useModal as useLibraryModal } from "@sencorp/react-ui/modal";
@@ -61,7 +65,7 @@ const modals = {
   HELP: HelpModal,
 };
 
-// Create this wrapper once in your app. It does not create any modal state.
+// Create your app’s typed modal hook.
 const useModal = () => useLibraryModal<typeof modals>();
 
 function Page() {
@@ -84,7 +88,7 @@ export default function App() {
 }
 ```
 
-Put the provider at the root of your app. All calls to your wrapper share its state, including calls inside modal components. When splitting this example across files, the wrapper can use `import type { modals } from "./modals"` to reference the registry without adding a runtime import.
+When organizing these into separate files, export `modals` from your component list and use `import type { modals } from "./modals"` in your hook file. Use your app hook in pages and modal components beneath the provider.
 
 ## Opening and closing
 
@@ -95,7 +99,7 @@ Put the provider at the root of your app. All calls to your wrapper share its st
 | `pop()` | Close the most recently opened modal. Does nothing if the stack is empty. |
 | `closeAll()` | Close every open modal. |
 
-TypeScript checks both names and props from the component registry:
+Pass the props declared by the selected component:
 
 ```tsx
 const { open, close } = useModal();
@@ -103,28 +107,24 @@ const { open, close } = useModal();
 open("INFO", { message: "Hello!" });
 open("HELP");
 close("INFO");
-
-// Type errors:
-open("INFO");                     // Missing required props
-open("INFO", { title: "Hello" }); // Expected message
-open("UNKNOWN");                  // Not registered
 ```
 
 ## Stacking
 
-Opening another modal keeps the existing modals mounted underneath it. Use `open` from inside a modal to add another on top, as in the example above. `pop()` reveals the previous modal with its local state preserved.
+Call `open` inside a modal to open another on top. Call `pop()` to close the top modal and return to the previous one, or `closeAll()` to dismiss them all.
 
-Each name can appear once in the stack. Calling `open` for an already open name updates its props and moves its entry to the end of the stack.
+Use a different name for each modal you want open at the same time. Opening an existing name updates its props and brings it to the top.
 
-Clicking the backdrop or pressing Escape calls `pop()`. Clicking inside the content does not dismiss it. `AnimatePresence` keeps a closing modal mounted until its exit animation finishes.
+Press Escape or click the backdrop to close the top modal.
 
 ## Provider props
 
 | Prop | Default | Purpose |
 | --- | --- | --- |
-| `modals` | Required | Object mapping modal names to component functions. Only open components are rendered, with the props supplied to `open`. |
+| `modals` | Required | Your object of modal names and components. |
 | `modalBackgroundColor` | `#ffffff` | Background color of every modal panel. |
 | `modalBackdropColor` | `rgb(0 0 0 / 50%)` | Color of each full-screen backdrop. |
+| `modalBackdropClassName` | — | CSS classes for the backdrop. |
 | `children` | — | Your app. |
 
 ```tsx
@@ -132,19 +132,37 @@ Clicking the backdrop or pressing Escape calls `pop()`. Clicking inside the cont
   modals={modals}
   modalBackgroundColor="#ffffff"
   modalBackdropColor="rgb(0 0 0 / 50%)"
+  modalBackdropClassName="blurred-backdrop"
 >
   <App />
 </ModalProvider>
 ```
 
-Colors accept CSS background color values. They are also available from `useModal()` as `modalBackgroundColor` and `modalBackdropColor`.
+Pass CSS color values to customize the panel and backdrop.
+
+Add the backdrop class to your app's CSS:
+
+```css
+.blurred-backdrop {
+  backdrop-filter: blur(4px);
+}
+```
 
 ## Modal component
 
-`Modal` renders a backdrop and content panel as divs, portaled directly into `document.body` after client mounting. The backdrop fills the viewport and centers the panel. The default appearance is a white panel over 50% black, with no built-in padding, width, rounded corners, or close button.
+Wrap your modal content in `Modal`. Set `className` or `style` to add width, padding, borders, and other panel styles. Add buttons for any actions or closing controls you need.
 
-`className`, `style`, children, and other HTML div attributes apply to the panel. A panel's `style.backgroundColor` overrides the provider's default. Supply `aria-label` or `aria-labelledby` to name the dialog.
+```tsx
+<Modal
+  className="my-modal"
+  style={{ width: 400, padding: 24, borderRadius: 12 }}
+  aria-labelledby="modal-title"
+>
+  <h2 id="modal-title">My modal</h2>
+  <button onClick={pop}>Close</button>
+</Modal>
+```
 
-Motion animates the backdrop and panel in and out over 100ms. The panel fades in, scales from `0.96` to `1`, and moves upward by `12px` with ease-out timing; closing reverses this. Exiting modals ignore pointer interaction.
+Use `aria-label` or `aria-labelledby` to name the modal. Set `style.backgroundColor` to override the provider's panel color for an individual modal.
 
-`Modal` and `useModal` must be used within `ModalProvider`.
+Use `Modal` and your app's `useModal` hook beneath `ModalProvider`.

@@ -25,6 +25,8 @@ export type ModalProviderProps<Modals extends ModalComponents> = PropsWithChildr
   modalBackgroundColor?: CSSProperties["backgroundColor"];
   /** The background color of the modal backdrop. */
   modalBackdropColor?: CSSProperties["backgroundColor"];
+  /** The class name of the modal backdrop. */
+  modalBackdropClassName?: string;
 }>;
 
 export type ModalProps = HTMLMotionProps<"div">;
@@ -34,6 +36,8 @@ export type ModalContextType<Modals extends ModalComponents> = {
   modalBackgroundColor: CSSProperties["backgroundColor"];
   /** The background color of the modal backdrop. */
   modalBackdropColor: CSSProperties["backgroundColor"];
+  /** The class name of the modal backdrop. */
+  modalBackdropClassName?: string;
   /** Opens a modal with the given name and props. */
   open: (...args: OpenModalArgs<Modals>) => void;
   /** Closes a modal with the given name. */

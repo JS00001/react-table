@@ -4,9 +4,15 @@
 
 [All components](../README.md#components)
 
-Import table components from `@sencorp/react-ui/table`. Requires React 18 or 19.
+## Setup
 
-Import the stylesheet once in your app:
+1. Use React 18 or 19 and install the package:
+
+   ```sh
+   npm install @sencorp/react-ui
+   ```
+
+2. Import the table stylesheet once in your app:
 
 ```tsx
 import "@sencorp/react-ui/table/styles.css";
@@ -100,7 +106,7 @@ Pass these optional props to `TableThemeProvider`. Colors accept any CSS color v
 | `tableActiveCheckboxIconColor`     | `string`              | Checkbox check and minus icon color.                     | `#ffffff`                    |
 | `tableCheckboxBorderRadius`       | `string \| number`    | Checkbox corner radius. Numbers are pixels.              | `0`                          |
 
-Tailwind is optional. It is used only in this repository's playground.
+Use your own CSS classes or inline styles. Tailwind is optional.
 
 ## Selection and sorting
 
@@ -108,15 +114,15 @@ Set `selectionEnabled: true` in `useTable` to enable selection. `TableRow` adds 
 
 - `table.selectedIds` contains the selected row IDs.
 - `table.toggleRowSelection(id)` selects or deselects one row.
-- Shift-click a row checkbox to select or deselect the inclusive range from the last normally clicked checkbox. The range follows the current data order and matches that checkbox's selected state, including rows outside the rendered window when virtualized.
+- Shift-click a row checkbox to select or deselect the inclusive range from the last normally clicked checkbox. The range follows the current data order and matches that checkbox's selected state.
 - `table.toggleRowSelection(id, true)` applies the same range selection programmatically. Without a previous row in the current data, it toggles just that row.
 - `table.selectAllRows()` toggles all rows.
 
-Set `sortable: true` on a column to enable its sorting control. Read `table.sortBy` and `table.sortOrder` to sort your data or request sorted results. The hook tracks sorting state; it does not reorder the data for you.
+Set `sortable: true` on a column to enable its sorting control. Use `table.sortBy` and `table.sortOrder` to sort the data you pass to `useTable`, or request sorted results from your server.
 
 ## Virtualization
 
-Set `virtualized: true` in `useTable` to render only visible rows, with a small buffer for scrolling:
+For large tables, set `virtualized: true` in `useTable`:
 
 ```tsx
 const table = useTable({ title: "People", data: people, columns, virtualized: true });

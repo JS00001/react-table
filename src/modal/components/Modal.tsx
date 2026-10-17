@@ -10,7 +10,7 @@ import useModal from "@/modal/hooks/useModal";
 
 export default function Modal({ children, className, style, ...props }: ModalProps) {
   const isPresent = useIsPresent();
-  const { pop, modalBackgroundColor, modalBackdropColor } = useModal();
+  const { pop, modalBackgroundColor, modalBackdropColor, modalBackdropClassName } = useModal();
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -38,13 +38,13 @@ export default function Modal({ children, className, style, ...props }: ModalPro
 
   return createPortal(
     <motion.div
-      className="sencorp-modal-backdrop"
       style={backdropStyles.style}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.1 }}
       onClick={handleBackdropClick}
+      className={styles("sencorp-modal-backdrop", modalBackdropClassName).className}
     >
       <motion.div
         role="dialog"

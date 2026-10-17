@@ -17,6 +17,7 @@ export const SidebarContext = createContext<SidebarContextType<SidebarComponents
 export default function SidebarProvider<Sidebars extends SidebarComponents>({
   children,
   sidebars,
+  sidebarBackdropClassName,
   sidebarBackgroundColor = "#ffffff",
   sidebarBackdropColor = "rgb(0 0 0 / 50%)",
 }: SidebarProviderProps<Sidebars>) {
@@ -69,6 +70,7 @@ export default function SidebarProvider<Sidebars extends SidebarComponents>({
   const context: SidebarContextType<Sidebars> = {
     sidebarBackgroundColor,
     sidebarBackdropColor,
+    sidebarBackdropClassName,
     open,
     close,
     closeAll,

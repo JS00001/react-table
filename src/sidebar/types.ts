@@ -25,6 +25,8 @@ export type SidebarProviderProps<Sidebars extends SidebarComponents> = PropsWith
   sidebarBackgroundColor?: CSSProperties["backgroundColor"];
   /** The background color of the backdrop. */
   sidebarBackdropColor?: CSSProperties["backgroundColor"];
+  /** The class name of the backdrop. */
+  sidebarBackdropClassName?: string;
 }>;
 
 export type SidebarContextType<Sidebars extends SidebarComponents> = {
@@ -32,6 +34,8 @@ export type SidebarContextType<Sidebars extends SidebarComponents> = {
   sidebarBackgroundColor: CSSProperties["backgroundColor"];
   /** The background color of the sidebar's backdrop */
   sidebarBackdropColor: CSSProperties["backgroundColor"];
+  /** The class name of the sidebar's backdrop */
+  sidebarBackdropClassName?: string;
   /** Open a sidebar with the given name and props */
   open: (...args: OpenSidebarArgs<Sidebars>) => void;
   /** Close a sidebar with the given name */

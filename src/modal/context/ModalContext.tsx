@@ -15,6 +15,7 @@ export const ModalContext = createContext<ModalContextType<ModalComponents> | un
 export default function ModalProvider<Modals extends ModalComponents>({
   children,
   modals,
+  modalBackdropClassName,
   modalBackgroundColor = "#ffffff",
   modalBackdropColor = "rgb(0 0 0 / 50%)",
 }: ModalProviderProps<Modals>) {
@@ -61,6 +62,7 @@ export default function ModalProvider<Modals extends ModalComponents>({
   const context: ModalContextType<Modals> = {
     modalBackgroundColor,
     modalBackdropColor,
+    modalBackdropClassName,
     open,
     close,
     closeAll,
@@ -72,11 +74,11 @@ export default function ModalProvider<Modals extends ModalComponents>({
       {children}
 
       <AnimatePresence>
-      {openModals.map(({ name, props }) => {
-        const Component: ModalComponents[string] = modals[name];
-        if (!Component) return null;
-        return <Component key={String(name)} {...props} />;
-      })}
+        {openModals.map(({ name, props }) => {
+          const Component: ModalComponents[string] = modals[name];
+          if (!Component) return null;
+          return <Component key={String(name)} {...props} />;
+        })}
       </AnimatePresence>
     </ModalContext.Provider>
   );

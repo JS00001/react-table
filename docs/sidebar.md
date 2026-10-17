@@ -2,11 +2,23 @@
 
 [All components](../README.md#components)
 
-Sidebars follow the modal API: a root provider owns the stack, a typed app hook reads it, and each component receives the props passed to `open`. All panels share one backdrop, so opening another panel does not darken the page again.
-
 ## Setup
 
-Install `motion@^12.23.0` in your app if it is not already present. Motion is a peer dependency and is excluded from this library’s build. No stylesheet import is required; sidebar layout styles are inline.
+1. Install the package and Motion 12:
+
+   ```sh
+   npm install @sencorp/react-ui "motion@^12.23.0"
+   ```
+
+2. Create each sidebar component using `Sidebar`. Declare the props you want to pass when opening it.
+3. Add the components to a `sidebars` object, using a name for each key.
+4. Create an app hook with `useLibrarySidebar<typeof sidebars>()`.
+5. Wrap your app in `<SidebarProvider sidebars={sidebars}>`.
+6. Call your hook's `open` method with a sidebar name and its props.
+
+No stylesheet import is needed.
+
+## Complete example
 
 ```tsx
 import { Sidebar, SidebarProvider, useSidebar as useLibrarySidebar } from "@sencorp/react-ui/sidebar";
@@ -54,32 +66,73 @@ export default function App() {
 }
 ```
 
-Create your wrapper once and use it anywhere under the provider, including inside sidebar components. Props and names are inferred from the component object. Components without required props can be opened without a props argument.
+Use your app hook in pages and sidebar components beneath the provider. When organizing these into separate files, export `sidebars` from your component list and use `import type { sidebars } from "./sidebars"` in your hook file.
 
 ## Stack methods
 
 | Method | Behavior |
 | --- | --- |
-| `open(name, props)` | Open a sidebar with its typed props. An existing name moves to the top with updated props. Reopening an exiting sidebar cancels its exit. |
+| `open(name, props)` | Open the named sidebar with its props. Required props must be supplied; omit the props argument if none are required. |
 | `close(name)` | Slide out the named sidebar. |
-| `pop()` | Slide out the most recently opened sidebar that is not already closing. |
+| `pop()` | Close the most recently opened sidebar. |
 | `closeAll()` | Slide out all panels. |
 
-Escape and clicks on the shared backdrop call `pop()`. Clicks inside panels keep them open. Lower panels remain mounted with their local state preserved. One instance of each name can be open at a time.
+## Stacking
+
+Call `open` inside a sidebar to open another on top. Call `pop()` to return to the previous sidebar, or `closeAll()` to dismiss them all.
+
+Use a different name for each sidebar you want open at the same time. Opening an existing name updates its props and brings it to the top.
+
+Press Escape or click the shared backdrop to close the top sidebar.
 
 ## Provider props
 
 | Prop | Default | Purpose |
 | --- | --- | --- |
-| `sidebars` | Required | Component registry keyed by sidebar name. |
+| `sidebars` | Required | Your object of sidebar names and components. |
 | `sidebarBackgroundColor` | `#ffffff` | Default panel background color. |
 | `sidebarBackdropColor` | `rgb(0 0 0 / 50%)` | Color of the single shared backdrop. |
+| `sidebarBackdropClassName` | — | CSS classes for the backdrop. |
 | `children` | — | Your app. |
 
-The provider portals the backdrop and stack directly into `document.body` after client mounting. There is one backdrop per provider, retained until the last panel finishes closing. It fades in over 200ms when the first panel opens, fades out when the last panel closes, and stays unchanged when only the top panel closes. Sidebars sit below this library's modals.
+Pass CSS color values to customize the panels and shared backdrop:
+
+```tsx
+<SidebarProvider
+  sidebars={sidebars}
+  sidebarBackgroundColor="#ffffff"
+  sidebarBackdropColor="rgb(0 0 0 / 50%)"
+  sidebarBackdropClassName="blurred-backdrop"
+>
+  <App />
+</SidebarProvider>
+```
+
+Add the backdrop class to your app's CSS:
+
+```css
+.blurred-backdrop {
+  backdrop-filter: blur(4px);
+}
+```
 
 ## Sidebar component
 
-`Sidebar` renders a white panel on the right, `24rem` wide and full height, capped at the viewport width. Its content scrolls vertically. Pass `className`, `style`, children, and other HTML attributes to customize the panel. `style.backgroundColor` overrides the provider color. Provide `aria-label` or `aria-labelledby` to name the panel.
+Wrap your sidebar content in `Sidebar`. The default panel is white, aligned to the right, full height, and `24rem` wide up to the viewport width.
 
-Motion slides panels in and out over 200ms. `AnimatePresence` keeps closing panels and the shared backdrop mounted until their exits finish. The backdrop fades in when the first panel opens and fades out when the last closes. Exiting panels ignore pointer interaction.
+Set `className` or `style` to customize the panel. Add your own padding and action buttons:
+
+```tsx
+<Sidebar
+  className="my-sidebar"
+  style={{ width: 480, padding: 24 }}
+  aria-labelledby="sidebar-title"
+>
+  <h2 id="sidebar-title">My sidebar</h2>
+  <button onClick={pop}>Close</button>
+</Sidebar>
+```
+
+Use `aria-label` or `aria-labelledby` to name the sidebar. Set `style.backgroundColor` to override the provider's panel color for an individual sidebar.
+
+Use `Sidebar` and your app's `useSidebar` hook beneath `SidebarProvider`.
