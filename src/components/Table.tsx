@@ -8,9 +8,9 @@ import { TableColumnWidth } from "@/lib/const";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
 export default function Table<DataType>(props: TableComponentProps<DataType>) {
+  const theme = useTableThemeContext();
   const { table, className, style } = props;
   const { columns, maxColumnWidth } = table;
-  const { tableContainerClassName, tableContainerStyles } = useTableThemeContext();
 
   const columnWidths = {
     [TableColumnWidth.CONTENT]: `min-content`,
@@ -21,16 +21,16 @@ export default function Table<DataType>(props: TableComponentProps<DataType>) {
   const largeTableStyles = styles(
     "sencorp-table-container-large-view",
     { gridTemplateColumns: columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
-    tableContainerClassName,
-    tableContainerStyles,
+    theme.tableContainerClassName,
+    theme.tableContainerStyles,
     className,
     style,
   );
 
   const compactTableStyles = styles(
     "sencorp-table-container-compact-view",
-    tableContainerClassName,
-    tableContainerStyles,
+    theme.tableContainerClassName,
+    theme.tableContainerStyles,
     className,
     style,
   );

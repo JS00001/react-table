@@ -1,15 +1,21 @@
 import { Fragment } from "react";
-import { useTableContext } from "../../context/TableContext";
+import { useTableContext } from "@/context/TableContext";
+import { useTableThemeContext } from "@/context/TableThemeContext";
 
 export default function TableHeaderRow() {
   const table = useTableContext();
+  const theme = useTableThemeContext();
 
   const hasRows = table.data.length > 0;
   const isEveryRowSelected = hasRows && table.data.length === table.selectedRowIndexes.length;
   const isSomeRowsSelected = hasRows && table.selectedRowIndexes.length > 0 && !isEveryRowSelected;
 
   if (table.isCompactView) {
-    return <div id="table-header">{table.title}</div>;
+    return (
+      <div id="table-header" className={theme.tableHeaderCellClassName} style={theme.tableHeaderCellStyles}>
+        {table.title}
+      </div>
+    );
   }
 
   return (

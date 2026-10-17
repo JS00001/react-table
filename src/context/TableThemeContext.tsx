@@ -3,6 +3,8 @@ import { createContext, useContext } from "react";
 type TableThemeContextType = {
   tableContainerClassName?: string;
   tableContainerStyles?: React.CSSProperties;
+  tableHeaderCellClassName?: string;
+  tableHeaderCellStyles?: React.CSSProperties;
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
