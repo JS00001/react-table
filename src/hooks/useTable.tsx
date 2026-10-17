@@ -44,12 +44,38 @@ export default function useTable<DataType extends TableRowData>({
     });
   };
 
-  const toggleRowSelection = (rowId: DataType["id"]) => {
+  const getRangeSelectedIds = (rowId: DataType["id"], prevState: typeof tableState) => {
+    const { lastSelectedId, selectedIds } = prevState;
+
+    if (lastSelectedId === null) return null;
+
+    const currentIndex = data.findIndex((row) => row.id === rowId);
+    const lastSelectedIndex = data.findIndex((row) => row.id === lastSelectedId);
+
+    if (lastSelectedIndex === -1 || currentIndex === -1) return null;
+
+    const shouldSelect = selectedIds.includes(lastSelectedId);
+    const startIndex = Math.min(lastSelectedIndex, currentIndex);
+    const endIndex = Math.max(lastSelectedIndex, currentIndex);
+    const rowIdsToUpdate = new Set(data.slice(startIndex, endIndex + 1).map((row) => row.id));
+
+    return shouldSelect
+      ? Array.from(new Set([...selectedIds, ...rowIdsToUpdate]))
+      : selectedIds.filter((id) => !rowIdsToUpdate.has(id));
+  };
+
+  const toggleRowSelection = (rowId: DataType["id"], shiftKey = false) => {
     setTableState((prevState) => {
       const isCurrentlySelected = prevState.selectedIds.includes(rowId);
-      const newSelectedIds = isCurrentlySelected
-        ? prevState.selectedIds.filter((id) => id !== rowId)
-        : [...prevState.selectedIds, rowId];
+      const rangeSelectedIds = shiftKey ? getRangeSelectedIds(rowId, prevState) : null;
+
+      if (rangeSelectedIds !== null) {
+        return { ...prevState, selectedIds: rangeSelectedIds };
+      }
+
+      const newSelectedIds = !isCurrentlySelected
+        ? [...prevState.selectedIds, rowId]
+        : prevState.selectedIds.filter((id) => id !== rowId);
 
       return { ...prevState, selectedIds: newSelectedIds, lastSelectedId: rowId };
     });

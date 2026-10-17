@@ -65,8 +65,8 @@ export type TableData<DataType extends TableRowData> = {
   selectAllRows: () => void;
   /** Set the sort by value to a new column */
   setSortBy: (columnId: string) => void;
-  /** Toggle a row as selected or unselected */
-  toggleRowSelection: (rowId: DataType["id"]) => void;
+  /** Toggle a row, or apply the last clicked row's selection to a range when shiftKey is true. */
+  toggleRowSelection: (rowId: DataType["id"], shiftKey?: boolean) => void;
 };
 
 export type TableComponentProps<DataType extends TableRowData> = React.HTMLAttributes<HTMLDivElement> & {
