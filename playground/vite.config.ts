@@ -11,6 +11,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@sencorp/react-ui/toast": decodeURIComponent(new URL("../src/toast/index.ts", import.meta.url).pathname),
       "@sencorp/react-ui/sidebar": decodeURIComponent(new URL("../src/sidebar/index.ts", import.meta.url).pathname),
       "@sencorp/react-ui/modal": decodeURIComponent(new URL("../src/modal/index.ts", import.meta.url).pathname),
       "@sencorp/react-ui/table/styles.css": decodeURIComponent(new URL("../src/table/styles.css", import.meta.url).pathname),
