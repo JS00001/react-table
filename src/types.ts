@@ -38,6 +38,8 @@ export type UseTableProps<DataType extends TableRowData> = {
   selectionEnabled?: boolean;
   /** The maximum width of columns that do not have the 'fill' size */
   maxColumnWidth?: number;
+  /** Render only visible rows while the page or nearest scrolling parent scrolls. Defaults to false. */
+  virtualized?: boolean;
 };
 
 export type TableData<DataType extends TableRowData> = {
@@ -51,6 +53,8 @@ export type TableData<DataType extends TableRowData> = {
   maxColumnWidth: number;
   /** Whether or not the table allows row selection. */
   selectionEnabled: boolean;
+  /** Whether rows are virtualized. */
+  virtualized: boolean;
   /** The current sort order of the table. */
   sortOrder: SortOrder | null;
   /** The column that the table is currently sorted by. */

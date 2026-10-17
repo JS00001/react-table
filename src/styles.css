@@ -8,6 +8,33 @@
   display: contents;
 }
 
+/** Virtualized table styles */
+#table-container.sencorp-table-virtualized {
+  overflow-anchor: none;
+  align-content: start;
+}
+
+.sencorp-table-virtual-header,
+.sencorp-table-virtual-body,
+.sencorp-table-virtual-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-content: start;
+  row-gap: 0;
+  min-height: 1px;
+}
+
+.sencorp-table-virtual-spacer {
+  grid-column: 1 / -1;
+}
+
+.sencorp-table-container-compact-view .sencorp-table-virtual-header,
+.sencorp-table-container-compact-view .sencorp-table-virtual-body,
+.sencorp-table-container-compact-view .sencorp-table-virtual-row {
+  display: block;
+}
+
 /* The table view when the view is larger than 1024px */
 .sencorp-table-container-large-view {
   display: grid;

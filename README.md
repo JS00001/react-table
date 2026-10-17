@@ -1,4 +1,4 @@
-![React Table](https://cdn.sencorpllc.com/react-table-banner.png)
+![React Table](https://cdn.sencorpllc.com/sencorp-react-table-banner.png)
 
 # @sencorp/react-table
 
@@ -110,6 +110,16 @@ Set `selectionEnabled: true` in `useTable` to enable selection. `TableRow` adds 
 - `table.selectAllRows()` toggles all rows.
 
 Set `sortable: true` on a column to enable its sorting control. Read `table.sortBy` and `table.sortOrder` to sort your data or request sorted results. The hook tracks sorting state; it does not reorder the data for you.
+
+## Virtualization
+
+Set `virtualized: true` in `useTable` to render only visible rows, with a small buffer for scrolling:
+
+```tsx
+const table = useTable({ title: "People", data: people, columns, virtualized: true });
+
+<Table table={table} rowComponent={PersonRow} />;
+```
 
 ## Run the demo
 

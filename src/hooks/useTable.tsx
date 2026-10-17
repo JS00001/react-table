@@ -11,6 +11,7 @@ export default function useTable<DataType extends TableRowData>({
   columns,
   maxColumnWidth = 200,
   selectionEnabled = false,
+  virtualized = false,
 }: UseTableProps<DataType>): TableData<DataType> {
   const [tableState, setTableState] = useState({
     sortBy: null as string | null,
@@ -77,6 +78,7 @@ export default function useTable<DataType extends TableRowData>({
     title,
     maxColumnWidth,
     selectionEnabled,
+    virtualized,
     columns: tableColumns,
     sortBy: tableState.sortBy,
     sortOrder: tableState.sortOrder,
