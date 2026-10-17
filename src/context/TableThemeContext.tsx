@@ -26,6 +26,8 @@ export type TableThemeContextType = {
   tableActiveCheckboxColor?: string;
   /** Color used for the check and minus icons in table checkboxes. */
   tableActiveCheckboxIconColor?: string;
+  /** Corner radius of table selection checkboxes. Numbers are interpreted as pixels. */
+  tableCheckboxBorderRadius?: React.CSSProperties["borderRadius"];
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
@@ -35,6 +37,7 @@ export type TableThemeProviderProps = PropsWithChildren<TableThemeContextType>;
 export default function TableThemeProvider({ children, ...theme }: TableThemeProviderProps) {
   const themeValues: TableThemeContextType = {
     ...theme,
+    tableCheckboxBorderRadius: theme.tableCheckboxBorderRadius ?? 4,
     tableActiveCheckboxIconColor: theme.tableActiveCheckboxIconColor ?? "#ffffff",
     tableActiveCheckboxColor: theme.tableActiveCheckboxColor ?? "oklch(54.6% 0.245 262.881)",
     tableInactiveCheckboxColor: theme.tableInactiveCheckboxColor ?? "oklch(87.2% 0.01 258.338)",

@@ -8,7 +8,7 @@ import { useTableThemeContext } from "@/context/TableThemeContext";
 export type TableSelectionCheckboxProps = {
   value?: boolean;
   indeterminate?: boolean;
-  onClick?: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   onChange?: (checked: boolean) => void;
 };
 
@@ -20,14 +20,14 @@ export default function TableSelectionCheckbox({ value, indeterminate, onChange,
   const isUnchecked = !value && !indeterminate;
 
   const containerStyles = styles(
-    { borderWidth: 1, borderStyle: "solid" },
+    { borderWidth: 1, borderStyle: "solid", borderRadius: theme.tableCheckboxBorderRadius },
     { width: 16, height: 16, display: "flex", flexShrink: 0, alignItems: "center", justifyContent: "center" },
     isUnchecked && { borderColor: `${theme.tableInactiveCheckboxColor}`, backgroundColor: "transparent" },
     isChecked && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
     isIndeterminate && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
   );
 
-  const handleClick = (event: MouseEvent) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     event.stopPropagation();
     event.preventDefault();
@@ -44,8 +44,8 @@ export default function TableSelectionCheckbox({ value, indeterminate, onChange,
       aria-checked={isIndeterminate ? "mixed" : value}
       onClick={handleClick}
     >
-      {isChecked && <CheckIcon size={12} />}
-      {isIndeterminate && <MinusIcon size={12} />}
+      {isChecked && <CheckIcon size={12} color={theme.tableActiveCheckboxIconColor} />}
+      {isIndeterminate && <MinusIcon size={12} color={theme.tableActiveCheckboxIconColor} />}
     </button>
   );
 }

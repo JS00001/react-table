@@ -1,5 +1,5 @@
 import type { TableRowData } from "@/types";
-import type { HTMLAttributes, AnchorHTMLAttributes, MouseEventHandler } from "react";
+import type { HTMLAttributes, AnchorHTMLAttributes, MouseEvent, MouseEventHandler } from "react";
 
 import { styles } from "@/lib/util";
 import TableCell from "@/components/cells/TableCell";
@@ -57,13 +57,16 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const containerStyles = compact ? compactContainerStyles : largeContainerStyles;
 
-  const handleRowSelection = () => {
-    table.toggleRowSelection(props.row.id);
+  const handleRowSelection = (event: MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    table.toggleRowSelection(props.row.id, event.shiftKey);
   };
 
   const SelectionCheckbox = (
     <TableCell onClick={handleRowSelection}>
-      <TableSelectionCheckbox value={isSelected} onChange={handleRowSelection} />
+      <TableSelectionCheckbox value={isSelected} onClick={handleRowSelection} />
     </TableCell>
   );
 

@@ -6,6 +6,7 @@ import TableHeaderRow from "@/components/rows/TableHeaderRow";
 import { styles } from "@/lib/util";
 import { TableColumnWidth } from "@/lib/const";
 import { useTableThemeContext } from "@/context/TableThemeContext";
+import VirtualTableContent from "@/components/VirtualTableContent";
 
 export default function Table<DataType extends TableRowData>(props: TableComponentProps<DataType>) {
   const theme = useTableThemeContext();
@@ -21,6 +22,7 @@ export default function Table<DataType extends TableRowData>(props: TableCompone
   const largeTableStyles = styles(
     "sencorp-table-container-large-view",
     { gridTemplateColumns: columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
+    table.virtualized && "sencorp-table-virtualized",
     theme.tableContainerClassName,
     theme.tableContainerStyles,
     className,
@@ -29,6 +31,7 @@ export default function Table<DataType extends TableRowData>(props: TableCompone
 
   const compactTableStyles = styles(
     "sencorp-table-container-compact-view",
+    table.virtualized && "sencorp-table-virtualized",
     theme.tableContainerClassName,
     theme.tableContainerStyles,
     className,
@@ -38,10 +41,12 @@ export default function Table<DataType extends TableRowData>(props: TableCompone
   return (
     <>
       <div id="table-container" className={largeTableStyles.className} style={largeTableStyles.style}>
-        <TableContent {...props} isCompactView={false} />
+        {table.virtualized && <VirtualTableContent {...props} isCompactView={false} />}
+        {!table.virtualized && <TableContent {...props} isCompactView={false} />}
       </div>
       <div id="table-container" className={compactTableStyles.className} style={compactTableStyles.style}>
-        <TableContent {...props} isCompactView={true} />
+        {table.virtualized && <VirtualTableContent {...props} isCompactView={true} />}
+        {!table.virtualized && <TableContent {...props} isCompactView={true} />}
       </div>
     </>
   );

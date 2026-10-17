@@ -1,4 +1,4 @@
-![React Table](https://cdn.sencorpllc.com/react-table-banner.png)
+![React Table](https://cdn.sencorpllc.com/sencorp-react-table-banner.png)
 
 # @sencorp/react-table
 
@@ -98,6 +98,7 @@ Pass these optional props to `TableThemeProvider`. Colors accept any CSS color v
 | `tableInactiveCheckboxColor`       | `string`              | Unchecked checkbox border.                               | `oklch(87.2% 0.01 258.338)`  |
 | `tableActiveCheckboxColor`         | `string`              | Checked or indeterminate checkbox background and border. | `oklch(54.6% 0.245 262.881)` |
 | `tableActiveCheckboxIconColor`     | `string`              | Checkbox check and minus icon color.                     | `#ffffff`                    |
+| `tableCheckboxBorderRadius`       | `string \| number`    | Checkbox corner radius. Numbers are pixels.              | `0`                          |
 
 Tailwind is optional. It is used only in this repository's playground.
 
@@ -107,9 +108,21 @@ Set `selectionEnabled: true` in `useTable` to enable selection. `TableRow` adds 
 
 - `table.selectedIds` contains the selected row IDs.
 - `table.toggleRowSelection(id)` selects or deselects one row.
+- Shift-click a row checkbox to select or deselect the inclusive range from the last normally clicked checkbox. The range follows the current data order and matches that checkbox's selected state, including rows outside the rendered window when virtualized.
+- `table.toggleRowSelection(id, true)` applies the same range selection programmatically. Without a previous row in the current data, it toggles just that row.
 - `table.selectAllRows()` toggles all rows.
 
 Set `sortable: true` on a column to enable its sorting control. Read `table.sortBy` and `table.sortOrder` to sort your data or request sorted results. The hook tracks sorting state; it does not reorder the data for you.
+
+## Virtualization
+
+Set `virtualized: true` in `useTable` to render only visible rows, with a small buffer for scrolling:
+
+```tsx
+const table = useTable({ title: "People", data: people, columns, virtualized: true });
+
+<Table table={table} rowComponent={PersonRow} />;
+```
 
 ## Run the demo
 

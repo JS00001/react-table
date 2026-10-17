@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 
+import { compute } from "@/lib/util";
 import { InternalCheckboxColumnId } from "@/lib/const";
 import { useTableContext } from "@/context/TableContext";
 import TableHeaderCell from "@/components/cells/TableHeaderCell";
@@ -11,7 +12,11 @@ export default function TableHeaderRow() {
   const theme = useTableThemeContext();
 
   const hasRows = table.data.length > 0;
-  const selectedRowCount = table.data.filter((row) => table.selectedIds.includes(row.id)).length;
+  const selectedRowCount = compute(() => {
+    const selectedIds = new Set(table.selectedIds);
+    return table.data.reduce((count, row) => count + Number(selectedIds.has(row.id)), 0);
+  });
+
   const isEveryRowSelected = hasRows && table.data.length === selectedRowCount;
   const isSomeRowsSelected = selectedRowCount > 0 && !isEveryRowSelected;
 
