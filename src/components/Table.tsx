@@ -5,10 +5,12 @@ import TableHeaderRow from "./rows/TableHeaderRow";
 
 import { styles } from "@/lib/util";
 import { TableColumnWidth } from "@/lib/const";
+import { useTableThemeContext } from "@/context/TableThemeContext";
 
 export default function Table<DataType>(props: TableComponentProps<DataType>) {
   const { table, className, style } = props;
   const { columns, maxColumnWidth } = table;
+  const { tableContainerClassName, tableContainerStyles } = useTableThemeContext();
 
   const columnWidths = {
     [TableColumnWidth.CONTENT]: `min-content`,
@@ -19,11 +21,19 @@ export default function Table<DataType>(props: TableComponentProps<DataType>) {
   const largeTableStyles = styles(
     "sencorp-table-container-large-view",
     { gridTemplateColumns: columns.map((col) => columnWidths[col.width ?? TableColumnWidth.AUTO]).join(" ") },
+    tableContainerClassName,
+    tableContainerStyles,
     className,
     style,
   );
 
-  const compactTableStyles = styles("sencorp-table-container-compact-view", className, style);
+  const compactTableStyles = styles(
+    "sencorp-table-container-compact-view",
+    tableContainerClassName,
+    tableContainerStyles,
+    className,
+    style,
+  );
 
   return (
     <>
@@ -45,6 +55,7 @@ function TableContent<DataType>({ table, isCompactView, rowComponent: RowCompone
   return (
     <TableProvider {...table} isCompactView={isCompactView}>
       <TableHeaderRow />
+
       <div id="table-body" className="contents">
         {table.data.map((row, index) => (
           <RowComponent key={getRowKey(row, index)} row={row} />

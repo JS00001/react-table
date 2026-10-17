@@ -1,20 +1,21 @@
 import { createContext, useContext } from "react";
 
-type TableThemeProviderProps = {};
-
-type TableThemeContextType = {};
+type TableThemeContextType = {
+  tableContainerClassName?: string;
+  tableContainerStyles?: React.CSSProperties;
+};
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
 
-export default function TableThemeProvider({}: TableThemeProviderProps) {
-  return <TableThemeContext.Provider value={{}}></TableThemeContext.Provider>;
+export default function TableThemeProvider(props: TableThemeContextType) {
+  return <TableThemeContext.Provider value={props}></TableThemeContext.Provider>;
 }
 
 export function useTableThemeContext() {
   const context = useContext(TableThemeContext);
 
   if (!context) {
-    throw new Error("useTableThemeContext must be used within a TableThemeProvider");
+    throw new Error("Your app must be wrapped in a <TableThemeProvider> to use this library.");
   }
 
   return context;
