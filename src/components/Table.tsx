@@ -60,7 +60,7 @@ function TableContent<DataType extends TableRowData>({
     <TableProvider {...table} isCompactView={isCompactView}>
       <TableHeaderRow />
 
-      <div id="table-body" className="contents">
+      <div id="table-body" style={{ display: "contents" }}>
         {table.data.map((row) => (
           <RowComponent key={row.id} row={row} />
         ))}

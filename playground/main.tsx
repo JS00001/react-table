@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "@/styles.css";
+import "./styles.css";
 
 import TableRow from "@/components/rows/TableRow";
 import TableCell from "@/components/cells/TableCell";
@@ -42,7 +43,7 @@ function Playground() {
 
   return (
     <TableThemeProvider>
-      <Table table={table} rowComponent={PersonRow} />
+      <Table table={table} rowComponent={PersonRow} className="border border-gray-200" />
     </TableThemeProvider>
   );
 }
