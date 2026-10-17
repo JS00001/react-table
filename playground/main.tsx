@@ -8,33 +8,76 @@ import "@sencorp/react-ui/table/styles.css";
 import type { TableColumn, TableRowComponentProps } from "@sencorp/react-ui/table";
 
 import { Modal, ModalProvider, useModal as useLibraryModal } from "@sencorp/react-ui/modal";
-
 import { Table, TableRow, TableCell, TableThemeProvider, useTable, useTableContext } from "@sencorp/react-ui/table";
 
-function InfoModal({ message }: { message: string }) {
-  const { close } = useModal();
+function InfoModal() {
+  const { open, close } = useModal();
 
   return (
-    <Modal className="w-full max-w-md rounded-lg p-6">
+    <Modal className="w-full max-w-xl rounded-lg p-6">
       <h2 className="mb-2 text-lg font-semibold">Info</h2>
-      <p className="mb-4 text-gray-600">{message}</p>
-      <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={() => close("INFO")}>
-        Close
-      </button>
+      <p className="mb-4 text-gray-600">This is info</p>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-red-600 px-3 py-2 text-white"
+          onClick={() => open("DANGER", { message: "This danger modal is above Info. Close it to return to Info." })}
+        >
+          Open danger on top
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={() => close("INFO")}>
+          Close
+        </button>
+      </div>
     </Modal>
   );
 }
 
 function DangerModal({ message }: { message: string }) {
-  const { close } = useModal();
+  const { open, close } = useModal();
 
   return (
     <Modal className="w-full max-w-md rounded-lg p-6">
       <h2 className="mb-2 text-lg font-semibold text-red-600">Danger</h2>
       <p className="mb-4 text-gray-600">{message}</p>
-      <button type="button" className="cursor-pointer rounded bg-red-600 px-3 py-2 text-white" onClick={() => close("DANGER")}>
-        Close
-      </button>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white"
+          onClick={() =>
+            open("CONFIRMATION", { message: "This confirmation is above Danger. Close it to return to the previous modal." })
+          }
+        >
+          Open confirmation on top
+        </button>
+        <button
+          type="button"
+          className="cursor-pointer rounded bg-red-600 px-3 py-2 text-white"
+          onClick={() => close("DANGER")}
+        >
+          Close
+        </button>
+      </div>
+    </Modal>
+  );
+}
+
+function ConfirmationModal({ message }: { message: string }) {
+  const { pop, closeAll } = useModal();
+
+  return (
+    <Modal className="w-full max-w-sm rounded-lg p-6">
+      <h2 className="mb-2 text-lg font-semibold">Confirmation</h2>
+      <p className="mb-4 text-gray-600">{message}</p>
+      <p className="mb-4 text-sm text-gray-500">Escape or a backdrop click also closes just the top modal.</p>
+      <div className="flex gap-2">
+        <button type="button" className="cursor-pointer rounded bg-gray-100 px-3 py-2" onClick={pop}>
+          Back to previous modal
+        </button>
+        <button type="button" className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white" onClick={closeAll}>
+          Close all modals
+        </button>
+      </div>
     </Modal>
   );
 }
@@ -42,6 +85,7 @@ function DangerModal({ message }: { message: string }) {
 const modals = {
   INFO: InfoModal,
   DANGER: DangerModal,
+  CONFIRMATION: ConfirmationModal,
 };
 
 const useModal = () => useLibraryModal<typeof modals>();
@@ -140,11 +184,11 @@ function Playground() {
   return (
     <>
       <main className="mx-auto max-w-6xl p-4 sm:p-8">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
-            onClick={() => open("INFO", { message: "This is the info modal." })}
+            onClick={() => open("INFO")}
           >
             Open info modal
           </button>
