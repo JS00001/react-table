@@ -5,7 +5,12 @@ import type { SortOrder, TableData, UseTableProps } from "@/types";
 import { compute } from "@/lib/util";
 import { TableColumnWidth } from "@/lib/const";
 
-export default function useTable<DataType>({ columns, selectionEnabled, data }: UseTableProps<DataType>): TableData<DataType> {
+export default function useTable<DataType>({
+  data,
+  columns,
+  maxColumnWidth = 200,
+  selectionEnabled = false,
+}: UseTableProps<DataType>): TableData<DataType> {
   const [tableState, setTableState] = useState({
     sortBy: null as string | null,
     sortOrder: null as SortOrder | null,
@@ -41,6 +46,8 @@ export default function useTable<DataType>({ columns, selectionEnabled, data }: 
 
   return {
     data,
+    maxColumnWidth,
+    selectionEnabled,
     columns: tableColumns,
     sortBy: tableState.sortBy,
     sortOrder: tableState.sortOrder,

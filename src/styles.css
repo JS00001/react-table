@@ -1,0 +1,27 @@
+.sencorp-table-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* The table view when the view is larger than 1024px */
+.sencorp-table-container-large-view {
+  display: grid;
+}
+
+@media (max-width: 1024px) {
+  .sencorp-table-container-large-view {
+    display: none;
+  }
+}
+
+/* The table view when the view is smaller than 1024px */
+.sencorp-table-container-compact-view {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .sencorp-table-container-compact-view {
+    display: block;
+  }
+}

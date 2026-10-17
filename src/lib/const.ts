@@ -7,10 +7,10 @@ export const TableColumnWidth = {
   FILL: "fill",
   AUTO: "auto",
   CONTENT: "content",
-};
+} as const;
 
 export const TableColumnAlignment = {
   LEFT: "left",
   CENTER: "center",
   RIGHT: "right",
-};
+} as const;

@@ -1,4 +1,5 @@
 import { TableSortOrder, TableColumnWidth, TableColumnAlignment } from "@/lib/const";
+import React from "react";
 
 type ValueOf<T> = T[keyof T];
 
@@ -28,6 +29,8 @@ export type UseTableProps<DataType> = {
   columns: TableColumn<DataType>[];
   /** Whether or not the table allows row selection. */
   selectionEnabled?: boolean;
+  /** The maximum width of columns that do not have the 'fill' size */
+  maxColumnWidth?: number;
 };
 
 export type TableData<DataType> = {
@@ -35,6 +38,10 @@ export type TableData<DataType> = {
   data: DataType[];
   /** The columns visible in the table. */
   columns: TableColumn<DataType>[];
+  /** The maximum column width for columns that do not have the 'fill' size. */
+  maxColumnWidth: number;
+  /** Whether or not the table allows row selection. */
+  selectionEnabled: boolean;
   /** The current sort order of the table. */
   sortOrder: SortOrder | null;
   /** The column that the table is currently sorted by. */
@@ -45,13 +52,11 @@ export type TableData<DataType> = {
   toggleRowSelection: (rowIndex: number) => void;
 };
 
-export type TableComponentProps<DataType> = {
+export type TableComponentProps<DataType> = React.HTMLAttributes<HTMLDivElement> & {
   /** The data to be displayed in the table. */
   table: TableData<DataType>;
   /** The title of the table. */
-  title?: string;
-  /** The class name to be applied to the table. */
-  className?: string;
+  title: string;
   /** A function that returns a unique key for each row in the table. */
   getRowKey: (row: DataType, index: number) => string;
   /** The component to be used for rendering each row in the table. */
