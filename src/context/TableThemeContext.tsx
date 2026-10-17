@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
+import type { PropsWithChildren } from "react";
 
-type TableThemeContextType = {
+export type TableThemeContextType = {
   tableContainerClassName?: string;
   tableContainerStyles?: React.CSSProperties;
   tableHeaderCellClassName?: string;
@@ -9,8 +10,10 @@ type TableThemeContextType = {
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
 
-export default function TableThemeProvider(props: TableThemeContextType) {
-  return <TableThemeContext.Provider value={props}></TableThemeContext.Provider>;
+export type TableThemeProviderProps = PropsWithChildren<TableThemeContextType>;
+
+export default function TableThemeProvider({ children, ...theme }: TableThemeProviderProps) {
+  return <TableThemeContext.Provider value={theme}>{children}</TableThemeContext.Provider>;
 }
 
 export function useTableThemeContext() {
