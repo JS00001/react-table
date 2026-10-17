@@ -1,6 +1,6 @@
 {
   "name": "@sencorp/react-table",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React table component library.",
   "type": "module",
   "main": "./dist/index.cjs",
