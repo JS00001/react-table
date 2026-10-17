@@ -1,7 +1,7 @@
 import type { TableComponentProps, TableRowData } from "@/types";
 
-import TableProvider from "../context/TableContext";
-import TableHeaderRow from "./rows/TableHeaderRow";
+import TableProvider from "@/context/TableContext";
+import TableHeaderRow from "@/components/rows/TableHeaderRow";
 
 import { styles } from "@/lib/util";
 import { TableColumnWidth } from "@/lib/const";

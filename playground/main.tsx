@@ -6,9 +6,9 @@ import "@/styles.css";
 
 import TableRow from "@/components/rows/TableRow";
 import TableCell from "@/components/cells/TableCell";
+import { useTableContext } from "@/context/TableContext";
 import { Table, TableThemeProvider, useTable } from "@/index";
 import type { TableColumn, TableRowComponentProps } from "@/types";
-import { useTableContext } from "@/context/TableContext";
 
 type Person = {
   id: string;
@@ -18,7 +18,7 @@ type Person = {
 };
 
 const columns: TableColumn[] = [
-  { id: "email", name: "Email", width: "fill" },
+  { id: "email", name: "Email", width: "fill", sortable: true },
   { id: "firstName", name: "First name", width: "fill" },
   { id: "lastName", name: "Last name", width: "fill" },
 ];
@@ -52,11 +52,12 @@ function PersonRow({ row }: TableRowComponentProps<Person>) {
 }
 
 function Playground() {
-  const table = useTable({ data: people, columns, title: "People" });
+  const table = useTable({ data: people, columns, title: "People", selectionEnabled: true });
 
   return (
     <TableThemeProvider
-      tableCellClassName="border-t border-gray-200 py-2"
+      tableCellClassName="border-t border-gray-200 p-2 items-center flex"
+      tableHeaderCellClassName="px-2 py-1 bg-gray-100"
       tableCellHoverBackgroundColor={colors.blue[50]}
       tableCellActiveBackgroundColor={colors.blue[100]}
     >

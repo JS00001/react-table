@@ -22,7 +22,7 @@ export default function TableSelectionCheckbox({ value, indeterminate, onChange,
   const containerStyles = styles(
     { borderWidth: 1, borderStyle: "solid" },
     { width: 16, height: 16, display: "flex", flexShrink: 0, alignItems: "center", justifyContent: "center" },
-    isUnchecked && { borderColor: `{theme.tableInactiveCheckboxColor}`, backgroundColor: "transparent" },
+    isUnchecked && { borderColor: `${theme.tableInactiveCheckboxColor}`, backgroundColor: "transparent" },
     isChecked && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
     isIndeterminate && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
   );
