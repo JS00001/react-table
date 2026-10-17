@@ -1,11 +1,14 @@
+import colors from "tailwindcss/colors";
 import { createRoot } from "react-dom/client";
-import "@/styles.css";
+
 import "./styles.css";
+import "@/styles.css";
 
 import TableRow from "@/components/rows/TableRow";
 import TableCell from "@/components/cells/TableCell";
 import { Table, TableThemeProvider, useTable } from "@/index";
 import type { TableColumn, TableRowComponentProps } from "@/types";
+import { useTableContext } from "@/context/TableContext";
 
 type Person = {
   id: string;
@@ -29,6 +32,16 @@ const people: Person[] = [
 ];
 
 function PersonRow({ row }: TableRowComponentProps<Person>) {
+  const { isCompactView } = useTableContext();
+
+  if (isCompactView) {
+    return (
+      <TableRow compact row={row}>
+        <p>{row.email}</p>
+      </TableRow>
+    );
+  }
+
   return (
     <TableRow row={row}>
       <TableCell>{row.email}</TableCell>
@@ -42,7 +55,11 @@ function Playground() {
   const table = useTable({ data: people, columns, title: "People" });
 
   return (
-    <TableThemeProvider>
+    <TableThemeProvider
+      tableCellClassName="border-t border-gray-200 py-2"
+      tableCellHoverBackgroundColor={colors.blue[50]}
+      tableCellActiveBackgroundColor={colors.blue[100]}
+    >
       <Table table={table} rowComponent={PersonRow} className="border border-gray-200" />
     </TableThemeProvider>
   );

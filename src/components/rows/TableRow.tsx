@@ -34,6 +34,7 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const largeContainerStyles = styles(
     { display: "contents" },
+    isSelected && "sencorp-table-row-selected",
     isClickable && { cursor: "pointer" },
     theme.tableCellClassName,
     theme.tableCellStyles,
@@ -43,7 +44,9 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const compactContainerStyles = styles(
     { display: "flex", flexDirection: "column" },
-    isSelected && "sencorp-table-row-selected",
+    "sencorp-table-row-compact",
+    { "--table-cell-hover-background-color": theme.tableCellHoverBackgroundColor },
+    { "--table-cell-active-background-color": theme.tableCellActiveBackgroundColor },
     isClickable && { cursor: "pointer" },
     className,
     style,
