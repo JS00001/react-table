@@ -1,0 +1,56 @@
+name: Publish
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - run: npm ci
+
+      - name: Check types
+        run: node ./node_modules/typescript/bin/tsc --noEmit
+
+      - name: Bump version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          npm version patch --no-git-tag-version
+
+      - name: Build
+        run: node ./node_modules/tsup/dist/cli-default.js
+
+      - name: Commit version and tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          git add package.json package-lock.json
+          git commit -m "chore: release v${VERSION}"
+          git tag "v${VERSION}"
+          git push --atomic origin HEAD:main "v${VERSION}"
+
+      - name: Publish to npm
+        run: npm publish --access public
