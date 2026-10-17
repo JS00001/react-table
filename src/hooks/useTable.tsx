@@ -3,7 +3,7 @@ import { useState } from "react";
 import type { SortOrder, TableData, UseTableProps } from "@/types";
 
 import { compute } from "@/lib/util";
-import { TableColumnWidth } from "@/lib/const";
+import { TableColumnWidth, TableSortOrder } from "@/lib/const";
 
 export default function useTable<DataType>({
   data,
@@ -34,7 +34,7 @@ export default function useTable<DataType>({
     return currentColumns;
   });
 
-  function toggleRowSelection(rowIndex: number) {
+  const toggleRowSelection = (rowIndex: number) => {
     setTableState((prevState) => {
       const isCurrentlySelected = prevState.selectedRowIndexes.includes(rowIndex);
       const newSelectedRowIndexes = isCurrentlySelected
@@ -43,7 +43,25 @@ export default function useTable<DataType>({
 
       return { ...prevState, selectedRowIndexes: newSelectedRowIndexes, lastSelectedRowIndex: rowIndex };
     });
-  }
+  };
+
+  const setSortBy = (columnId: string) => {
+    setTableState((prevState) => {
+      const isSameColumn = prevState.sortBy === columnId;
+
+      const newSortOrder = compute(() => {
+        if (isSameColumn && prevState.sortOrder === TableSortOrder.ASC) {
+          return TableSortOrder.DESC;
+        } else if (isSameColumn && prevState.sortOrder === TableSortOrder.DESC) {
+          return null;
+        } else {
+          return TableSortOrder.ASC;
+        }
+      });
+
+      return { ...prevState, sortBy: columnId, sortOrder: newSortOrder };
+    });
+  };
 
   return {
     data,
@@ -55,5 +73,6 @@ export default function useTable<DataType>({
     sortOrder: tableState.sortOrder,
     selectedRowIndexes: tableState.selectedRowIndexes,
     toggleRowSelection,
+    setSortBy,
   };
 }

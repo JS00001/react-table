@@ -54,6 +54,8 @@ export type TableData<DataType> = {
   selectedRowIndexes: number[];
   /** Toggle a row as selected or unselected */
   toggleRowSelection: (rowIndex: number) => void;
+  /** Set the sort by value to a new column */
+  setSortBy: (columnId: string) => void;
 };
 
 export type TableComponentProps<DataType> = React.HTMLAttributes<HTMLDivElement> & {
