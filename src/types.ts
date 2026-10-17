@@ -57,10 +57,12 @@ export type TableData<DataType extends TableRowData> = {
   sortBy: string | null;
   /** The IDs of the currently selected rows. */
   selectedIds: DataType["id"][];
-  /** Toggle a row as selected or unselected */
-  toggleRowSelection: (rowId: DataType["id"]) => void;
+  /** Select or deselect all rows in the table */
+  selectAllRows: () => void;
   /** Set the sort by value to a new column */
   setSortBy: (columnId: string) => void;
+  /** Toggle a row as selected or unselected */
+  toggleRowSelection: (rowId: DataType["id"]) => void;
 };
 
 export type TableComponentProps<DataType extends TableRowData> = React.HTMLAttributes<HTMLDivElement> & {

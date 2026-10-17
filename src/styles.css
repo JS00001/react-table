@@ -44,3 +44,12 @@
 #table-row.sencorp-table-row-compact:active {
   background-color: var(--table-cell-active-background-color);
 }
+
+/* Interaction states for table selection checkbox */
+#table-selection-checkbox:hover {
+  opacity: 0.9;
+}
+
+#table-selection-checkbox:active {
+  opacity: 0.8;
+}

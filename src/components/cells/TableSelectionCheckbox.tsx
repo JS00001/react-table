@@ -5,21 +5,27 @@ import CheckIcon from "@/components/icons/CheckIcon";
 import MinusIcon from "@/components/icons/MinusIcon";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
-type TableHeaderCheckboxProps = {
+type TableSelectionCheckboxProps = {
   value?: boolean;
   indeterminate?: boolean;
   onClick?: (event: MouseEvent) => void;
   onChange?: (checked: boolean) => void;
 };
 
-export default function TableHeaderCheckbox({ value, indeterminate, onChange, onClick }: TableHeaderCheckboxProps) {
+export default function TableSelectionCheckbox({ value, indeterminate, onChange, onClick }: TableSelectionCheckboxProps) {
   const theme = useTableThemeContext();
 
   const isIndeterminate = indeterminate;
   const isChecked = value && !indeterminate;
   const isUnchecked = !value && !indeterminate;
 
-  const containerStyles = styles("");
+  const containerStyles = styles(
+    { borderWidth: 1, borderStyle: "solid" },
+    { width: 16, height: 16, display: "flex", flexShrink: 0, alignItems: "center", justifyContent: "center" },
+    isUnchecked && { borderColor: `{theme.tableInactiveCheckboxColor}`, backgroundColor: "transparent" },
+    isChecked && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
+    isIndeterminate && { borderColor: `${theme.tableActiveCheckboxColor}`, backgroundColor: theme.tableActiveCheckboxColor },
+  );
 
   const handleClick = (event: MouseEvent) => {
     onClick?.(event);
@@ -30,6 +36,7 @@ export default function TableHeaderCheckbox({ value, indeterminate, onChange, on
 
   return (
     <button
+      id="table-selection-checkbox"
       type="button"
       role="checkbox"
       style={containerStyles.style}

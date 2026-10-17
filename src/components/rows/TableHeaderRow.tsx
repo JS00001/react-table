@@ -4,6 +4,7 @@ import { InternalCheckboxColumnId } from "@/lib/const";
 import { useTableContext } from "@/context/TableContext";
 import TableHeaderCell from "@/components/cells/TableHeaderCell";
 import { useTableThemeContext } from "@/context/TableThemeContext";
+import TableSelectionCheckbox from "@/components/cells/TableSelectionCheckbox";
 
 export default function TableHeaderRow() {
   const table = useTableContext();
@@ -27,7 +28,15 @@ export default function TableHeaderRow() {
       {table.columns.map((column, index) => (
         <Fragment key={index}>
           <TableHeaderCell column={column}>
-            {column.id === InternalCheckboxColumnId ? <></> : <p>{column.name}</p>}
+            {column.id === InternalCheckboxColumnId ? (
+              <TableSelectionCheckbox
+                value={isEveryRowSelected}
+                indeterminate={isSomeRowsSelected}
+                onChange={table.selectAllRows}
+              />
+            ) : (
+              <p>{column.name}</p>
+            )}
           </TableHeaderCell>
         </Fragment>
       ))}

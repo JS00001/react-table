@@ -2,8 +2,10 @@ import type { TableRowData } from "@/types";
 import type { HTMLAttributes, AnchorHTMLAttributes, MouseEventHandler } from "react";
 
 import { styles } from "@/lib/util";
+import TableCell from "@/components/cells/TableCell";
 import { useTableContext } from "@/context/TableContext";
 import { useTableThemeContext } from "@/context/TableThemeContext";
+import TableSelectionCheckbox from "@/components/cells/TableSelectionCheckbox";
 
 type BaseRowProps<DataType extends TableRowData> = {
   row: DataType;
@@ -31,6 +33,7 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const isClickable = !!(href || onClick);
   const isSelected = table.selectedIds.includes(props.row.id);
+  const isSelectable = !compact && table.selectionEnabled;
 
   const largeContainerStyles = styles(
     { display: "contents" },
@@ -54,11 +57,22 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const containerStyles = compact ? compactContainerStyles : largeContainerStyles;
 
+  const handleRowSelection = () => {
+    table.toggleRowSelection(props.row.id);
+  };
+
+  const SelectionCheckbox = (
+    <TableCell onClick={handleRowSelection}>
+      <TableSelectionCheckbox value={isSelected} onChange={handleRowSelection} />
+    </TableCell>
+  );
+
   if (props.href !== undefined) {
     const { row, href, compact, style, className, children, onClick, ...anchorProps } = props;
 
     return (
       <a {...anchorProps} id="table-row" href={href} className={containerStyles.className} style={containerStyles.style}>
+        {isSelectable && SelectionCheckbox}
         {children}
       </a>
     );
@@ -69,6 +83,7 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   return (
     <div {...divProps} id="table-row" className={containerStyles.className} style={containerStyles.style} onClick={divOnClick}>
+      {isSelectable && SelectionCheckbox}
       {children}
     </div>
   );

@@ -20,10 +20,12 @@ export type TableThemeContextType = {
   tableCellActiveBackgroundColor?: string;
   /** Background color used for cells in a selected row. */
   tableCellSelectedBackgroundColor?: string;
+  /** Color used for the table selection checkbox's border when unselected. */
+  tableInactiveCheckboxColor?: string;
   /** Color used for the table selection checkbox. */
-  tableCheckboxColor?: string;
+  tableActiveCheckboxColor?: string;
   /** Color used for the check and minus icons in table checkboxes. */
-  tableCheckboxIconColor?: string;
+  tableActiveCheckboxIconColor?: string;
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);
@@ -31,8 +33,9 @@ export const TableThemeContext = createContext<TableThemeContextType | undefined
 export default function TableThemeProvider({ children, ...theme }: PropsWithChildren<TableThemeContextType>) {
   const themeValues: TableThemeContextType = {
     ...theme,
-    tableCheckboxIconColor: theme.tableCheckboxIconColor ?? "#ffffff",
-    tableCheckboxColor: theme.tableCheckboxColor ?? "oklch(54.6% 0.245 262.881)",
+    tableActiveCheckboxIconColor: theme.tableActiveCheckboxIconColor ?? "#ffffff",
+    tableActiveCheckboxColor: theme.tableActiveCheckboxColor ?? "oklch(54.6% 0.245 262.881)",
+    tableInactiveCheckboxColor: theme.tableInactiveCheckboxColor ?? "oklch(87.2% 0.01 258.338)",
     tableCellHoverBackgroundColor: theme.tableCellHoverBackgroundColor ?? "oklch(98.5% 0.002 247.839)",
     tableCellActiveBackgroundColor: theme.tableCellActiveBackgroundColor ?? "oklch(96.7% 0.003 264.542)",
     tableCellSelectedBackgroundColor: theme.tableCellSelectedBackgroundColor ?? "oklch(92.8% 0.006 264.531)",

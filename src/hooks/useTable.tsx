@@ -34,6 +34,15 @@ export default function useTable<DataType extends TableRowData>({
     return currentColumns;
   });
 
+  const selectAllRows = () => {
+    setTableState((prevState) => {
+      const allRowIds = data.map((row) => row.id);
+      const isAllSelected = prevState.selectedIds.length === allRowIds.length;
+
+      return { ...prevState, selectedIds: isAllSelected ? [] : allRowIds, lastSelectedId: null };
+    });
+  };
+
   const toggleRowSelection = (rowId: DataType["id"]) => {
     setTableState((prevState) => {
       const isCurrentlySelected = prevState.selectedIds.includes(rowId);
@@ -72,7 +81,8 @@ export default function useTable<DataType extends TableRowData>({
     sortBy: tableState.sortBy,
     sortOrder: tableState.sortOrder,
     selectedIds: tableState.selectedIds,
-    toggleRowSelection,
     setSortBy,
+    selectAllRows,
+    toggleRowSelection,
   };
 }
