@@ -2,6 +2,7 @@ import type { TableRowData } from "@/types";
 import type { HTMLAttributes, AnchorHTMLAttributes, MouseEventHandler } from "react";
 
 import { styles } from "@/lib/util";
+import { useTableContext } from "@/context/TableContext";
 import { useTableThemeContext } from "@/context/TableThemeContext";
 
 type BaseRowProps<DataType extends TableRowData> = {
@@ -24,10 +25,12 @@ type LinkRowProps<DataType extends TableRowData> = BaseRowProps<DataType> &
 type TableRowProps<DataType extends TableRowData> = DivRowProps<DataType> | LinkRowProps<DataType>;
 
 export default function TableRow<DataType extends TableRowData>(props: TableRowProps<DataType>) {
+  const table = useTableContext();
   const theme = useTableThemeContext();
   const { href, compact, style, className, children, onClick } = props;
 
   const isClickable = !!(href || onClick);
+  const isSelected = table.selectedIds.includes(props.row.id);
 
   const largeContainerStyles = styles(
     { display: "contents" },
@@ -40,6 +43,7 @@ export default function TableRow<DataType extends TableRowData>(props: TableRowP
 
   const compactContainerStyles = styles(
     { display: "flex", flexDirection: "column" },
+    isSelected && "sencorp-table-row-selected",
     isClickable && { cursor: "pointer" },
     className,
     style,

@@ -8,6 +8,9 @@ export type TableThemeContextType = {
   tableHeaderCellStyles?: React.CSSProperties;
   tableCellClassName?: string;
   tableCellStyles?: React.CSSProperties;
+  tableCellHoverBackgroundColor?: string;
+  tableCellActiveBackgroundColor?: string;
+  tableCellSelectedBackgroundColor?: string;
 };
 
 export const TableThemeContext = createContext<TableThemeContextType | undefined>(undefined);

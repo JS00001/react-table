@@ -29,3 +29,16 @@
     display: block;
   }
 }
+
+/* Interaction states for table rows */
+#table-row.sencorp-table-row-selected > #table-cell {
+  background-color: var(--sencorp-table-row-selected-background-color);
+}
+
+#table-row:hover > #table-cell {
+  background-color: var(--sencorp-table-row-hover-background-color);
+}
+
+#table-row:active > #table-cell {
+  background-color: var(--sencorp-table-row-active-background-color);
+}
