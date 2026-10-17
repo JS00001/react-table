@@ -1,3 +1,5 @@
+![Sencorp React UI Sidebar](https://cdn.sencorpllc.com/sencorp-react-ui-sidebar.png)
+
 # Sidebar
 
 [All components](../README.md#components)

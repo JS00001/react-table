@@ -1,3 +1,5 @@
+![Sencorp React UI Modal](https://cdn.sencorpllc.com/sencorp-react-ui-modal.png)
+
 # Modal
 
 [All components](../README.md#components)
