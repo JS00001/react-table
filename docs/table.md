@@ -1,4 +1,4 @@
-![Sencorp React UI Table](https://cdn.sencorpllc.com/sencorp-react-ui-table.png)
+![Sencorp React UI Table](https://cdn.sencorpllc.com/sencorp-react-ui-documentation-table.png)
 
 # Table
 
