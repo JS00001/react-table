@@ -1,6 +1,6 @@
 {
   "name": "@sencorp/react-ui",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React UI components from Sencorp, organized by component family.",
   "repository": {
     "type": "git",
