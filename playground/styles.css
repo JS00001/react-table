@@ -1,0 +1,39 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #172033;
+  background: #f5f7fa;
+  font-synthesis: none;
+}
+body {
+  margin: 0;
+}
+main {
+  max-width: 960px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+.eyebrow {
+  color: #5266c5;
+  font-weight: 650;
+}
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.04em;
+}
+p {
+  line-height: 1.7;
+}
+section {
+  margin: 32px 0;
+  padding: 32px;
+  background: white;
+  border: 1px solid #dce1e9;
+  border-radius: 12px;
+}
+h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+small {
+  color: #627086;
+}
