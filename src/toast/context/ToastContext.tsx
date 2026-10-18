@@ -1,33 +1,18 @@
 import { createPortal } from "react-dom";
 import { AnimatePresence } from "motion/react";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState, useSyncExternalStore } from "react";
 
-import type { ReactNode } from "react";
-import type { ToastContextType, ToastOptions, ToastProviderProps } from "@/toast/types";
+import type { ToastContextType, ToastProviderProps } from "@/toast/types";
 
 import { styles } from "@/util";
 import Toast from "@/toast/components/Toast";
+import { getServerSnapshot, getSnapshot, subscribe, toast as toastController } from "@/toast/store";
 
 export const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-type ActiveToast = {
-  id: number;
-  content: ReactNode;
-  options: ToastOptions;
-};
-
 export default function ToastProvider({ children, duration = 4000, toastClassName, toastStyle }: ToastProviderProps) {
-  const nextId = useRef(0);
-  const [toast, setToast] = useState<ActiveToast | null>(null);
+  const toast = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [container, setContainer] = useState<HTMLElement | null>(null);
-
-  const open = (content: ReactNode, options: ToastOptions = {}) => {
-    setToast({ id: ++nextId.current, content, options });
-  };
-
-  const close = () => {
-    setToast(null);
-  };
 
   useEffect(() => {
     setContainer(document.body);
@@ -39,14 +24,14 @@ export default function ToastProvider({ children, duration = 4000, toastClassNam
     if (timeout <= 0) return;
 
     const timer = window.setTimeout(() => {
-      setToast((current) => (current?.id === toast.id ? null : current));
+      if (getSnapshot()?.id === toast.id) toastController.close();
     }, timeout);
 
     return () => window.clearTimeout(timer);
   }, [toast, duration]);
 
   return (
-    <ToastContext.Provider value={{ open, close }}>
+    <ToastContext.Provider value={{ open: toastController.show, close: toastController.close }}>
       {children}
       {container &&
         createPortal(

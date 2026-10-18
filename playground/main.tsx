@@ -1,5 +1,5 @@
 import colors from "tailwindcss/colors";
-import { ToastProvider, useToast } from "@sencorp/react-ui/toast";
+import { ToastProvider, toast } from "@sencorp/react-ui/toast";
 import { useState } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -232,7 +232,6 @@ function DemoTable({ demo }: { demo: (typeof demos)[number] }) {
 }
 
 function Playground() {
-  const { open: openToast, close: closeToast } = useToast();
   const { open: openSidebar } = useSidebar();
   const { open } = useModal();
   const [activeTab, setActiveTab] = useState(0);
@@ -266,10 +265,10 @@ function Playground() {
           <button
             type="button"
             className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
-            onClick={() => openToast(
+            onClick={() => toast.show(
               <div className="flex items-center justify-between gap-4">
                 <span>Changes saved.</span>
-                <button type="button" className="cursor-pointer underline" onClick={closeToast}>Dismiss</button>
+                <button type="button" className="cursor-pointer underline" onClick={toast.close}>Dismiss</button>
               </div>,
             )}
           >
@@ -278,10 +277,10 @@ function Playground() {
           <button
             type="button"
             className="cursor-pointer rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700"
-            onClick={() => openToast(
+            onClick={() => toast.show(
               <div className="flex items-center justify-between gap-4">
                 <span>Something went wrong. Try again.</span>
-                <button type="button" className="cursor-pointer underline" onClick={closeToast}>Dismiss</button>
+                <button type="button" className="cursor-pointer underline" onClick={toast.close}>Dismiss</button>
               </div>,
               { style: { backgroundColor: "#fee2e2", color: "#991b1b" }, duration: 6000 },
             )}
