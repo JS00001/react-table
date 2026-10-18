@@ -10,26 +10,25 @@
    npm install @sencorp/react-ui "motion@^12.23.0"
    ```
 
-2. Wrap your app in `ToastProvider`.
-3. Call `useToast()` beneath the provider.
-4. Call `open(content)` to show a toast at the bottom right.
+2. Mount one `ToastProvider` at your app root to render toasts.
+3. Import `toast` and call `toast.show(content)` from any component or regular function. The caller does not need to be inside the provider.
+
+Toast state is shared across the app. A call made before the provider mounts is displayed when it mounts. Call these methods in the browser, such as in event handlers or after a request completes.
 
 ## Complete example
 
 ```tsx
-import { ToastProvider, useToast } from "@sencorp/react-ui/toast";
+import { ToastProvider, toast } from "@sencorp/react-ui/toast";
 
 function Page() {
-  const { open, close } = useToast();
-
   return (
     <button
       type="button"
-      onClick={() => open(
+      onClick={() => toast.show(
         <div>
           <strong>Saved</strong>
           <p>Your changes have been saved.</p>
-          <button type="button" onClick={close}>Dismiss</button>
+          <button type="button" onClick={toast.close}>Dismiss</button>
         </div>,
       )}
     >
@@ -51,18 +50,18 @@ export default function App() {
 
 | Method | Usage |
 | --- | --- |
-| `open(content, options?)` | Show text or React content. A new toast replaces the current toast and appears above it during the transition. |
-| `close()` | Dismiss the current toast. |
+| `toast.show(content, options?)` | Show text or React content. A new toast replaces the current toast and appears above it during the transition. |
+| `toast.close()` | Dismiss the current toast. |
 
 Toasts dismiss automatically after four seconds. Set `duration` in milliseconds for a different timeout, or use `0` to keep a toast open until you dismiss it.
 
 ```tsx
-const { open, close } = useToast();
+import { toast } from "@sencorp/react-ui/toast";
 
-open("Changes saved.");
-open("Please review your settings.", { duration: 6000 });
-open("Waiting for your response.", { duration: 0 });
-close();
+toast.show("Changes saved.");
+toast.show("Please review your settings.", { duration: 6000 });
+toast.show("Waiting for your response.", { duration: 0 });
+toast.close();
 ```
 
 ## Customize one toast
@@ -70,7 +69,7 @@ close();
 Style your toast content with your own component, or pass `className` or `style` in the options. Add any background, text color, padding, width, border, and shadow you want:
 
 ```tsx
-open("Could not save your changes.", {
+toast.show("Could not save your changes.", {
   duration: 6000,
   className: "error-toast",
   style: {
@@ -100,4 +99,8 @@ open("Could not save your changes.", {
 </ToastProvider>
 ```
 
-Options passed to `open` override provider defaults. Add your own content and action buttons as needed. Toasts enter and exit with a short fade and vertical slide.
+Options passed to `toast.show` override provider defaults. Add your own content and action buttons as needed. Toasts enter and exit with a short fade and vertical slide.
+
+## Existing hook usage
+
+`useToast()` remains available beneath `ToastProvider`. Its `open` and `close` methods use the same shared toast state as `toast.show()` and `toast.close()`.

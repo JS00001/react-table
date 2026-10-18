@@ -29,7 +29,7 @@ For modals, register your components with `ModalProvider` at the app root and cr
 
 For sidebars, register your components with `SidebarProvider` at the app root and create a typed `useSidebar` wrapper.
 
-For toasts, wrap your app in `ToastProvider` and call `useToast().open()` with your content.
+For toasts, mount `ToastProvider` once and call `toast.show()` with your content from any component or function.
 
 ## Try the demo
 
